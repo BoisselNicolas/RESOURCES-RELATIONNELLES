@@ -15,25 +15,75 @@
       </ion-header>
     
       <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+          <ion-item>
+            <label>Nom</label>
+            <input type="text" placeholder="Nom" v-model="lastname">
+          </ion-item>
+        <ion-item>
+          <label>Prénom</label>
+          <input type="text" placeholder="Prenom" v-model="firstname">
+        </ion-item>
+        <ion-item>
+          <label>Mail</label>
+          <input type="text"  placeholder="Mail" v-model="mail">
+        </ion-item>
+        <ion-item>
+          <label>Mot de passe</label>
+          <input type="password"  placeholder="Mot de passe" v-model="password">
+        </ion-item>
+        <ion-item>
+          <ion-button
+          v-on:click="registration"
+          >  Je m'inscris</ion-button>
+        </ion-item>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+<script>
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton} from '@ionic/vue';
 import { defineComponent } from 'vue';
+import AuthenticationService from "../../services/AuthenticationService";
 
 export default defineComponent({
   name: 'SignUp',
+  data(){
+    return{
+      lastname: "",
+      firstname: "",
+      mail: "",
+      password: "",
+    }
+  },
   components: {
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
     IonToolbar,
+    IonItem,
+    IonButton
+  },
+  methods: {
+    async registration () {
+      
+        console.log(this.firstname);
+        console.log(this.lastname);
+        console.log(this.mail);
+        console.log(this.password);
+
+      const response = await AuthenticationService.register({
+        nomUser: this.lastname,
+        prenomUser: this.firstname,
+        mailUser: this.mail,
+        passwordUser: this.password,
+      })
+      console.log(response.data)
+
+
+
+    }
   }
 });
 </script>

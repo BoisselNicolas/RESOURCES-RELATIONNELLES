@@ -1,88 +1,197 @@
-const express = require("express"); // create our app w/ express
-const bodyParser = require("body-parser"); // pull information from HTML POST (express4)
-const cors = require("cors");
-const mongoose = require('mongoose'); // mongoose for mongodb
-const morgan = require('morgan'); // log requests to the console (express4)
-const methodOverride = require('method-override') // simulate DELETE and PUT (express4)
+const cors = require('cors')
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
 
-const app = express();
+const app = express()
+const port = 8080
+const domain = 'http://localhost:8080/'
 
-app.use(morgan('dev'));     // log every request to the console
-app.use(bodyParser.urlencoded({'extended':'true'}));  // parse application/x-www-form-urlencoded
-app.use(bodyParser.json());   // parse application/json
-app.use(bodyParser.json({type: 'application/vnd.api+json'}));   // parse application/vnd.api+json as json
-app.use(methodOverride());
-app.use(cors());
 
-app.use(function(req,res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-   next();
+
+/**
+ * Import MongoClient & connexion à la DB
+ */
+
+mongoose.connect('mongodb://localhost/ravenclaw', function(err) {
+  if (err) { throw err; }
+  else{ console.log("connecté à la base de données") }
 });
 
-// Routes
-const routes = require("./routes/user.routes");
-routes(app);
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
 
-// Connection
-const db = require("./models");
-db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+const UserSchema = mongoose.Schema(
+  {
+      //_id: mongoose.ObjectId,
+      firstnameUser: String,
+      lastnameUser: String,
+      mailUser: String,
+      passwordUser: String,
+      roleUser: String,
+  }
+);
+
+
+const RessourceSchema = mongoose.Schema(
+  {
+      //_id: mongoose.ObjectId,
+      title: String,
+      content: String,
+      categories: String
+  }
+);
+
+let User = mongoose.model('user', UserSchema);
+let Ressources = mongoose.model('ressources', RessourceSchema);
+
+
+
+app.use(cors())
+app.use(bodyParser.json())
+
+
+//------------------------------------------------------------------- Inscription -------------------------------------------------------------------//
+
+
+app.post('/register', (req, res) => {
+
+
+  let newUser = new User({ 
+    lastnameUser: `${req.body.nomUser}`, 
+    firstnameUser: `${req.body.prenomUser}`, 
+    mailUser: `${req.body.mailUser}`, 
+    passwordUser: `${req.body.passwordUser}`,
   })
-  .then(() => {
-    console.log("Connected to the database!");
+
+  newUser.save(function (err) {
+    if (err) { throw err; }
+  });
+  res.send({
+    name: `firstname : ${req.body.prenomUser}`,
+    lastname: `lastname:  ${req.body.nomUser}`,
+    mail: `mail :  ${req.body.mailUser}`,
+    pass: `password ${req.body.passwordUser} `
   })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
+})
+
+//------------------------------------------------------------------- Connexion -------------------------------------------------------------------//
+
+app.post('/login', (req, res) => {
+  User.findOne({ mailUser: req.body.mailUser }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+        if(obj.passwordUser == req.body.passwordUser){
+          res.send(obj)
+        }
+      }
+    }
+  })
+})
+
+//------------------------------------------------------------------- CurrentUser -------------------------------------------------------------------//
+
+
+app.post('/getCurrentUser', (req, res) => {
+  User.findById({ _id: req.body.IdUser }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
+  })
+})
+
+//------------------------------------------------------------------- Ressources -------------------------------------------------------------------//
+
+
+app.post('/addRessource', (req, res) => {
+
+
+  let newRessource = new Ressources({ 
+    title: `${req.body.titleRessource}`, 
+    content: `${req.body.contentRessource}`, 
+    categories: `${req.body.categoriesRessource}`, 
   })
 
-/*const app = express();
+  newRessource.save(function (err) {
+    if (err) { throw err; }
+  });
+  res.send("ajouté")
+})
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
 
-app.use(cors(corsOptions));
+//------------------------------------------------------------------- Ressources - Get All -------------------------------------------------------------------//
 
-// parse requests of content-type - application/json
-app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to serdaigle application." });
-});
+app.post('/getAllRessources', (req, res) => {
 
-require("./app/routes/user.routes")(app);
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-
-const db = require("./app/models");
-db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  Ressources.find({} , function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
   })
-  .then(() => {
-    console.log("Connected to the database!");
+})
+
+//------------------------------------------------------------------- Ressources - Delete -------------------------------------------------------------------//
+
+
+
+app.post('/deleteRessources', (req, res) => {
+console.log(req.body.RessourceId)
+  Ressources.deleteOne({_id: req.body.RessourceId} , function(err){
+    if(err){
+      throw err
+    }else{ 
+        res.send("Ressource supprimé")      
+        console.log("ressource deleted")
+    }
   })
-  .catch(err => {
-    console.log("Cannot connect to the database!", err);
-    process.exit();
-  });*/
+})
+
+//------------------------------------------------------------------- Ressources - GetOne -------------------------------------------------------------------//
+
+
+
+app.post('/getOneRessource', (req, res) => {
+  Ressources.findOne({ _id: req.body.RessourceId }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
+  })
+})
+
+
+//------------------------------------------------------------------- Ressources - Edit -------------------------------------------------------------------//
+
+
+
+app.post('/editRessource', (req, res) => {
+  Ressources.updateOne({ _id: req.body.idRessource }, { title: req.body.titleRessource, content: req.body.contentRessource, categories: req.body.categoriesRessource}, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+        console.log("Upadting !")
+      }
+    }
+  })
+})
+
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+

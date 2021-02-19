@@ -3,6 +3,10 @@ module.exports = app => {
 
     var router = require("express").Router();
 
+    router.post("/", function(){
+        res.send("Hello World");
+    });
+    
     // Create a new User
     router.post("/new", users.create);
 

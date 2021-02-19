@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Profil from '../views/profil/Profil.vue'
 import Login from '../views/profil/Login.vue'
 import SignUp from '../views/profil/Signup.vue'
+import AddRessource from '../views/ressources/AddRessource.vue'
+import EditRessource from '../views/ressources/EditRessource.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -60,6 +62,17 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profil SignUp',
     component: SignUp
   },
+  {
+    path: '/profil/ressource/add',
+    name: 'Profil Ressource Add',
+    component: AddRessource
+  },
+  {
+    path: '/profil/ressource/edit/:id',
+    name: 'Profil Ressource Edit',
+    props: true,
+    component: EditRessource
+  }
   /*  {
     path: '/profil/password/new',
     name: 'Profil New Password',
