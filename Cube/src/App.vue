@@ -1,22 +1,11 @@
 <template>
   <ion-app>
-   
-    <ion-header >
-      <div v-if="nomUser!=''">
-      <label>{{ nomUser }}</label><br>
-      <label>{{ prenomUser }}</label><br>
-      <label>{{ mailUser }}</label><br>
-      </div>
-      <ion-button href="/profil">Account</ion-button>
-    </ion-header>
-
-
      <ion-router-outlet />
   </ion-app>
 </template>
 
 <script >
-import { IonApp, IonRouterOutlet, IonHeader,IonButton } from '@ionic/vue';
+import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import User from "../src/services/User"
 
@@ -25,8 +14,6 @@ export default defineComponent({
   components: {
     IonApp,
     IonRouterOutlet,
-    IonHeader,
-    IonButton
   },
   data() {
     return {

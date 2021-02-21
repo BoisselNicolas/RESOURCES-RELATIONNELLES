@@ -1,21 +1,33 @@
 <template>
   <ion-page>
-    <ion-content >
-      <div class="container">
+    <menu-header></menu-header>
+    <ion-content>
+      <div >
         <ion-item>
           <ion-button href="/profil/ressource/add"> Ajouter une ressource </ion-button>
           <ion-button href="/profil/categories"> Catégories </ion-button>
           <ion-button href="/profil/typeressource"> Type de ressource </ion-button>
-          
         </ion-item>
         <ul v-for="ressource in RessourcesArray" :key="ressource._id" >
-            <label>Ressources</label>
-            <li>{{ ressource.title }}</li> 
-            <li>{{ ressource.content }}</li>
-            <li>{{ ressource.categories }}</li>
-            <li>{{ ressource.datePublication }}</li>
-            <ion-button v-on:click="deleteRessource(ressource._id)" >delete</ion-button>
-            <ion-button v-on:click="editRessource(ressource._id)">Edit</ion-button>
+
+          <ion-card>
+            <ion-card-header>
+             <!--  <img src="./madison.jpg" /> -->
+              <ion-card-subtitle>{{ ressource.datePublication }}  - {{ ressource.categories }}</ion-card-subtitle>
+              <ion-card-title>{{ ressource.title }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              {{ ressource.content }}
+            </ion-card-content>
+            <ion-button color="warning" v-on:click="editRessource(ressource._id)">Edit</ion-button>
+            <ion-button color="danger" v-on:click="deleteRessource(ressource._id)" >delete</ion-button>
+            <ion-icon name="arrow-back"
+                      style="font-size: 24px; color: green">
+            </ion-icon>
+          </ion-card> 
+
+          
         </ul>
       </div>
     </ion-content>
@@ -27,10 +39,19 @@ import {
   IonContent,
   IonPage,
   IonButton,
+  IonItem,
+  IonCard,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardHeader,
+  IonCardContent,
+  IonIcon
 
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources"
+import MenuHeader from '../../views/menu/menuHeader'
+import { logoAngular } from 'ionicons/icons'
 
 export default defineComponent({
   name: "Profil",
@@ -44,6 +65,14 @@ export default defineComponent({
     IonContent,
     IonPage,
     IonButton,
+    IonItem,
+    MenuHeader,
+    IonCard,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonCardHeader,
+    IonCardContent,
+    IonIcon,
   },
     methods: {
       async deleteRessource(RessourceId){
@@ -102,7 +131,4 @@ export default defineComponent({
   text-decoration: none;
 }
 
- ion-item{
-   margin-top: 10%;
- }
 </style>

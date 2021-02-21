@@ -1,21 +1,28 @@
 <template>
-    <div class="container">
-        <ion-item>
-            <ion-button href="/profil/typeressource/add">Ajouter un type de ressource</ion-button>
-        </ion-item>
-        <ul v-for="TOP in TypeOfRessourceArray" :key="TOP._id" >
-             <label>Type de ressources</label>
-              <li>{{ TOP.Nom }}</li> 
-              <ion-button v-on:click="deleteTypeOfRessource(TOP._id)" >delete</ion-button>
-              <ion-button v-on:click="editTypeOfRessource(TOP._id)">Edit</ion-button>
-        </ul>
-    </div>
+    <ion-page>
+        <ion-content>
+            <div class="container">
+                <ion-item>
+                    <ion-button href="/profil/typeressource/add">Ajouter un type de ressource</ion-button>
+                </ion-item>
+                <ul v-for="TOP in TypeOfRessourceArray" :key="TOP._id" >
+                    <label>Type de ressources</label>
+                    <li>{{ TOP.Nom }}</li> 
+                    <ion-button v-on:click="deleteTypeOfRessource(TOP._id)" >delete</ion-button>
+                    <ion-button v-on:click="editTypeOfRessource(TOP._id)">Edit</ion-button>
+                </ul>
+            </div>
+        </ion-content>
+    </ion-page>
+    
 </template>
 
 <script>
 import {
   IonItem,
   IonButton,
+  IonPage,
+  IonContent
 } from "@ionic/vue";
 import TypeOfRessourceService from '../../services/TypeDeRessource'
 export default {
@@ -27,7 +34,9 @@ export default {
     },
     components: {
         IonItem,
-        IonButton
+        IonButton,
+        IonPage,
+        IonContent
     },
     async mounted(){
         const rslt = await TypeOfRessourceService.GetAllTypeOfRessource()

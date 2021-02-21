@@ -1,18 +1,27 @@
 <template>
-    <div class="container">
-        <ion-item>
-            <ion-button href="/profil/categories/add">Ajouter une Categories</ion-button>
-        </ion-item>
-        <ul v-for="cat in CategoriesArray" :key="cat._id" >
-             <label>Catégories</label>
-              <li>{{ cat.Nom }}</li> 
-              <ion-button v-on:click="deleteCategories(cat._id)" >delete</ion-button>
-              <ion-button v-on:click="editCategories(cat._id)">Edit</ion-button>
-        </ul>
-      </div>
+    <ion-page>
+        <ion-content class="container">
+            <ion-item>
+                <ion-button href="/profil/categories/add">Ajouter une Categories</ion-button>
+            </ion-item>
+            <ul v-for="cat in CategoriesArray" :key="cat._id" >
+                <label>Catégories</label>
+                <li>{{ cat.Nom }}</li> 
+                <ion-button v-on:click="deleteCategories(cat._id)" >delete</ion-button>
+                <ion-button v-on:click="editCategories(cat._id)">Edit</ion-button>
+            </ul>
+        </ion-content>
+    </ion-page>
 </template>
 
 <script>
+import {
+  IonButton,
+  IonItem,
+  IonContent,
+  IonPage
+
+} from "@ionic/vue";
 import CategoriesServices from "../../services/Categories"
 export default {
     name: "Categories",
@@ -36,6 +45,12 @@ export default {
         editCategories(id){
             this.$router.push(`/profil/categories/edit/${id}`)
         }
+    },
+    components: {
+        IonButton,
+        IonItem,
+        IonContent,
+        IonPage
     }
 }
 </script>
