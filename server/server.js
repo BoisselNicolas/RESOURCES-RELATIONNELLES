@@ -37,12 +37,31 @@ const RessourceSchema = mongoose.Schema(
       //_id: mongoose.ObjectId,
       title: String,
       content: String,
-      categories: String
+      categories: String,
+      datePublication: String, 
+      UserId: String,
+  }
+);
+
+
+const CategoriesSchema = mongoose.Schema(
+  {
+      //_id: mongoose.ObjectId,
+      Nom: String,
+  }
+);
+
+const TypeOfRessourceSchema = mongoose.Schema(
+  {
+      //_id: mongoose.ObjectId,
+      Nom: String,
   }
 );
 
 let User = mongoose.model('user', UserSchema);
 let Ressources = mongoose.model('ressources', RessourceSchema);
+let Categories = mongoose.model('categories', CategoriesSchema);
+let TypeOfRessource = mongoose.model('typeofressource', TypeOfRessourceSchema);
 
 
 
@@ -61,6 +80,7 @@ app.post('/register', (req, res) => {
     firstnameUser: `${req.body.prenomUser}`, 
     mailUser: `${req.body.mailUser}`, 
     passwordUser: `${req.body.passwordUser}`,
+    roleUser: 'Citoyen connecté',
   })
 
   newUser.save(function (err) {
@@ -115,6 +135,8 @@ app.post('/addRessource', (req, res) => {
     title: `${req.body.titleRessource}`, 
     content: `${req.body.contentRessource}`, 
     categories: `${req.body.categoriesRessource}`, 
+    datePublication: Date.now(),
+    UserId: `${req.body.idUser}`, 
   })
 
   newRessource.save(function (err) {
@@ -190,6 +212,159 @@ app.post('/editRessource', (req, res) => {
   })
 })
 
+//------------------------------------------------------------------- Categories - Add -------------------------------------------------------------------//
+
+app.post('/addCategories', (req, res) => {
+
+  let newCategories = new Categories({ 
+    Nom: `${req.body.nameCat}`, 
+  })
+  newCategories.save(function (err) {
+    if (err) { throw err; }
+  });
+  res.send("Ajouté")
+})
+
+//------------------------------------------------------------------- Categories - Delete -------------------------------------------------------------------//
+
+
+
+app.post('/DeleteCategories', (req, res) => {
+    Categories.deleteOne({_id: req.body.idCategories} , function(err){
+      if(err){
+        throw err
+      }else{ 
+          res.send("Ressource supprimé")      
+          console.log("ressource deleted")
+      }
+    })
+  })
+
+//------------------------------------------------------------------- Categories - Get All -------------------------------------------------------------------//
+
+app.post('/GetAllCategories', (req, res) => {
+  Categories.find({} , function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
+  })
+})
+
+
+//------------------------------------------------------------------- Categories - Edit -------------------------------------------------------------------//
+
+
+
+app.post('/EditCategories', (req, res) => {
+  Categories.updateOne({ _id: req.body.idCategorie }, { Nom: req.body.nomCategorie }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+        res.send('Updating')
+      }
+    }
+  })
+})
+
+//------------------------------------------------------------------- Categories - GetOne -------------------------------------------------------------------//
+
+
+
+app.post('/getOneCategories', (req, res) => {
+  Categories.findOne({ _id: req.body.CategorieId }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
+  })
+})
+
+
+//------------------------------------------------------------------- Type Of Ressource - Add -------------------------------------------------------------------//
+
+
+
+app.post('/addTypeOfRessource', (req, res) => {
+  
+
+  let newTypeOfRessource = new TypeOfRessource({ 
+    Nom: `${req.body.NameTypeOfRessource}`, 
+  })
+  newTypeOfRessource.save(function (err) {
+    if (err) { throw err; }
+  });
+  res.send("Ajouté")
+})
+
+
+//------------------------------------------------------------------- Type Of Ressource - Get All -------------------------------------------------------------------//
+
+app.post('/GetAllTypeOfRessource', (req, res) => {
+  TypeOfRessource.find({} , function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
+  })
+})
+
+//------------------------------------------------------------------- Type Of Ressource - Delete -------------------------------------------------------------------//
+
+
+
+app.post('/DeleteTypeOfRessource', (req, res) => {
+  TypeOfRessource.deleteOne({_id: req.body.idTypeOfRessource} , function(err){
+    if(err){
+      throw err
+    }else{ 
+        res.send("Ressource supprimé")      
+        console.log("ressource deleted")
+    }
+  })
+})
+
+//------------------------------------------------------------------- Type Of Ressource - GetOne -------------------------------------------------------------------//
+
+
+
+app.post('/getOneTypeOfRessource', (req, res) => {
+  TypeOfRessource.findOne({ _id: req.body.idTypeDeRessource }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+          res.send(obj)
+      }
+    }
+  })
+})
+
+//------------------------------------------------------------------- Type Of Ressource - Edit -------------------------------------------------------------------//
+
+
+
+app.post('/EditTypeOfRessource', (req, res) => {
+  TypeOfRessource.updateOne({ _id: req.body.idTypeDeRessource }, { Nom: req.body.nomTypeOFRessource }, function(err, obj){
+    if(err){
+      throw err
+    }else{ 
+      if(obj != null){
+        res.send('Updating')
+      }
+    }
+  })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

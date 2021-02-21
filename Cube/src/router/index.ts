@@ -6,6 +6,12 @@ import Login from '../views/profil/Login.vue'
 import SignUp from '../views/profil/Signup.vue'
 import AddRessource from '../views/ressources/AddRessource.vue'
 import EditRessource from '../views/ressources/EditRessource.vue'
+import AddCategories from '../views/categories/AddCategories.vue'
+import Categories from '../views/categories/Categories.vue'
+import EditCategories from '../views/categories/EditCategorie.vue'
+import TypeDeRessource from '../views/TypeDeRessource/Typederessource.vue'
+import AddTypeDeRessource from '../views/TypeDeRessource/AddTypederessource.vue'
+import EditTypeDeRessource from '../views/TypeDeRessource/EditTypeOfRessource.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -72,7 +78,39 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profil Ressource Edit',
     props: true,
     component: EditRessource
-  }
+  },
+  {
+    path: '/profil/categories/add',
+    name: 'Profil Categories Add',
+    component: AddCategories
+  },
+  {
+    path: '/profil/categories',
+    name: 'Profil Categories',
+    component: Categories
+  },
+  {
+    path: '/profil/categories/edit/:id',
+    name: 'Profil Categories Edit',
+    props: true,
+    component: EditCategories
+  },
+  {
+    path: '/profil/typeressource',
+    name: 'Profil typeressource',
+    component: TypeDeRessource
+  },
+  {
+    path: '/profil/typeressource/add',
+    name: 'Profil Type De Ressource Add',
+    component: AddTypeDeRessource
+  },
+  {
+    path: '/profil/typeressource/edit/:id',
+    name: 'Profil Type De Ressource Edit',
+    props: true,
+    component: EditTypeDeRessource
+  },
   /*  {
     path: '/profil/password/new',
     name: 'Profil New Password',

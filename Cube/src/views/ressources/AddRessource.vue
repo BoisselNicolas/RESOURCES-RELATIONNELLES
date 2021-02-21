@@ -47,7 +47,8 @@ export default defineComponent ({
             const rslt = await RessourceServices.addRessource({
                 titleRessource : this.title ,
                 contentRessource: this.content,
-                categoriesRessource: this.categories
+                categoriesRessource: this.categories,
+                idUser: sessionStorage.getItem('UserId'),
             })
             this.$router.push('/profil')
         }

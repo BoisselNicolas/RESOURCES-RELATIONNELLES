@@ -1,10 +1,12 @@
 <template>
   <ion-app>
    
-    <ion-header v-if="nomUser!=''">
+    <ion-header >
+      <div v-if="nomUser!=''">
       <label>{{ nomUser }}</label><br>
       <label>{{ prenomUser }}</label><br>
       <label>{{ mailUser }}</label><br>
+      </div>
       <ion-button href="/profil">Account</ion-button>
     </ion-header>
 

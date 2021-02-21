@@ -4,14 +4,18 @@
       <div class="container">
         <ion-item>
           <ion-button href="/profil/ressource/add"> Ajouter une ressource </ion-button>
+          <ion-button href="/profil/categories"> Catégories </ion-button>
+          <ion-button href="/profil/typeressource"> Type de ressource </ion-button>
+          
         </ion-item>
         <ul v-for="ressource in RessourcesArray" :key="ressource._id" >
-             <label>Ressources</label>
-             <li>{{ ressource.title }}</li> 
-              <li>{{ ressource.content }}</li>
-              <li>{{ ressource.categories }}</li>
-              <ion-button v-on:click="deleteRessource(ressource._id)" >delete</ion-button>
-              <ion-button v-on:click="editRessource(ressource._id)">Edit</ion-button>
+            <label>Ressources</label>
+            <li>{{ ressource.title }}</li> 
+            <li>{{ ressource.content }}</li>
+            <li>{{ ressource.categories }}</li>
+            <li>{{ ressource.datePublication }}</li>
+            <ion-button v-on:click="deleteRessource(ressource._id)" >delete</ion-button>
+            <ion-button v-on:click="editRessource(ressource._id)">Edit</ion-button>
         </ul>
       </div>
     </ion-content>
@@ -55,12 +59,16 @@ export default defineComponent({
     },
     async mounted(){
       this.CurrentUser = sessionStorage.getItem('UserId');
-      if(this.CurrentUser == ""){
+      if(this.CurrentUser == null){
         this.$router.push("/profil/login");
       }
 
       const rslt = await RessourceServices.getRessources();
       this.RessourcesArray = rslt.data
+      
+    
+
+ 
     }
 });
 </script>
