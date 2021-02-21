@@ -1,5 +1,6 @@
 <template>
     <ion-page>
+        <menu-header></menu-header>
         <ion-content>
             <ion-item class="content">
                 <label>Nom de la catégories : </label>
@@ -21,6 +22,7 @@ import {
 
 } from "@ionic/vue";
 import CategoriesServices from "../../services/Categories"
+import MenuHeader from '../menu/menuHeader.vue';
 export default {
     name: "",
     data(){
@@ -42,7 +44,8 @@ export default {
         IonButton,
         IonItem,
         IonContent,
-        IonPage
+        IonPage,
+        MenuHeader
     },
     async mounted(){
         this.id = this.$route.params.id

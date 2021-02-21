@@ -1,5 +1,6 @@
 <template>
     <ion-page>
+<menu-header></menu-header>
         <ion-content>
             <div class="content">
                 <ion-item>
@@ -27,6 +28,7 @@ import {
   IonPage
 } from "@ionic/vue";
 import RessourceServices from "../../services/Ressources"
+import MenuHeader from '../../views/menu/menuHeader'
 export default {
     name: "Edit Ressource",
     data(){
@@ -60,15 +62,11 @@ export default {
         IonContent,
         IonItem,
         IonButton,
-        IonPage
+        IonPage,
+        MenuHeader
     }
 
     
 }
 </script>
 
-<style scoped>
-.content{
-    margin-top: 15%;
-}
-</style>

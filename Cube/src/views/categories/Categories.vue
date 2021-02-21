@@ -1,5 +1,6 @@
 <template>
     <ion-page>
+        <menu-header></menu-header>
         <ion-content class="container">
             <ion-item>
                 <ion-button href="/profil/categories/add">Ajouter une Categories</ion-button>
@@ -23,6 +24,7 @@ import {
 
 } from "@ionic/vue";
 import CategoriesServices from "../../services/Categories"
+import MenuHeader from '../menu/menuHeader.vue';
 export default {
     name: "Categories",
     data(){
@@ -50,7 +52,8 @@ export default {
         IonButton,
         IonItem,
         IonContent,
-        IonPage
+        IonPage,
+        MenuHeader
     }
 }
 </script>

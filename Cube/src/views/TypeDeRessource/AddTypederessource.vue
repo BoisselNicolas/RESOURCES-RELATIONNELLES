@@ -1,5 +1,6 @@
 <template>
 <ion-page>
+    <menu-header></menu-header>
     <ion-content>
         <div class="container">
             <ion-item>
@@ -23,6 +24,7 @@ import {
   IonContent
 } from "@ionic/vue";
 import TypeOfRessourceService from '../../services/TypeDeRessource'
+import MenuHeader from '../menu/menuHeader.vue';
 export default {
     name: "",
     data(){
@@ -42,7 +44,8 @@ export default {
         IonItem,
         IonButton,
         IonPage,
-        IonContent
+        IonContent,
+        MenuHeader,
     },
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
     <ion-page>
+        <menu-header></menu-header>
         <ion-content>
             <div class="content">
                 <ion-item>
@@ -29,13 +30,15 @@ import {
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources"
+import MenuHeader from "../menu/menuHeader.vue";
 export default defineComponent ({
     name: "Profil Ressource Add",
     components: {
         IonContent,
         IonItem,
         IonButton,
-        IonPage
+        IonPage,
+        MenuHeader
     },
     data(){
         return{
@@ -57,9 +60,3 @@ export default defineComponent ({
     }
 })
 </script>
-
-<style scoped>
-.content{
-    margin-top: 15%;
-}
-</style>

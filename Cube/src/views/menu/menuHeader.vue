@@ -6,20 +6,20 @@
                 <ion-col size="2">
                     <ion-avatar>
                         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                        <ion-button href="/profil">Account</ion-button>
                     </ion-avatar>
-
+                    <div v-if="nomUser!=''">
+                      <label>{{ nomUser }}</label><br>
+                      <label>{{ prenomUser }}</label><br>
+                      <label>{{ mailUser }}</label><br>
+                    </div>
+                    <ion-button href="/profil">Account</ion-button>
                 </ion-col>
                 <ion-col size="10" >Ressource Relationnelles</ion-col>
           </ion-row>
       </ion-grid>
 
 
-      <div v-if="nomUser!=''">
-      <label>{{ nomUser }}</label><br>
-      <label>{{ prenomUser }}</label><br>
-      <label>{{ mailUser }}</label><br>
-      </div>
+      
       
     </ion-header>
 </template>
@@ -51,11 +51,10 @@ export default defineComponent({
         this.IdUser = sessionStorage.getItem('UserId');
         const user = await User.getCurrentUser({
           IdUser: this.IdUser
-          });
-
-          this.nomUser = user.data.lastnameUser;
-          this.prenomUser = user.data.firstnameUser;
-          this.mailUser = user.data.mailUser;
+        });
+        this.nomUser = user.data.lastnameUser;
+        this.prenomUser = user.data.firstnameUser;
+        this.mailUser = user.data.mailUser;
     }
   }
 });
