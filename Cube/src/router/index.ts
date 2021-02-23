@@ -12,6 +12,7 @@ import EditCategories from '../views/categories/EditCategorie.vue'
 import TypeDeRessource from '../views/TypeDeRessource/Typederessource.vue'
 import AddTypeDeRessource from '../views/TypeDeRessource/AddTypederessource.vue'
 import EditTypeDeRessource from '../views/TypeDeRessource/EditTypeOfRessource.vue'
+import { store } from "../store";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     name: 'Home',
-    component: Home 
+    component: Home ,
   },
 /*  {
     path: '/ressource/search',
@@ -56,7 +57,16 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/profil',
     name: 'Profil',
-    component: Profil
+    component: Profil,
+    beforeEnter: (to, from, next) => {
+        if(store.state.role == 1){
+          console.log("1")
+          next()
+        }else{
+          next('/profil/login')
+        }
+        
+    }
   },
  {
     path: '/profil/login',

@@ -58,6 +58,7 @@ import {
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import AuthenticationService from "../../services/AuthenticationService"
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: "Profil",
@@ -67,6 +68,7 @@ export default defineComponent({
         messages: [],
         mail: "",
         pass: "",
+        temp: ""
     }
   },
   components: {
@@ -83,12 +85,13 @@ export default defineComponent({
             mailUser: this.mail,
             passwordUser: this.pass
         })
-        console.log(response.data._id);
+        sessionStorage.setItem('accessToken', response.data.accessToken) 
 
-        this.$router.push('/profil');
-        sessionStorage.setItem('UserId', response.data._id)
-        
-      }
+        this.$store.commit("SetRole", 1)
+
+        this.$router.replace('/profil');
+      
+    }
 
     },
 });

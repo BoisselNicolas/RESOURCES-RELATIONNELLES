@@ -1,0 +1,15 @@
+POST http://localhost:8080/api/getRoleUser
+content-type: application/json
+{
+    "mailUser": "azerty@gmail.com"
+}
+
+
+###
+
+
+POST http://localhost:8080/login
+{
+    "mailUser": "azerty@gmail.com",
+    "passwordUser": "azertyui123"
+}

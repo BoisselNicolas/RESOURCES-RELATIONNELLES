@@ -1,7 +1,10 @@
+require('dotenv').config()
+
 const cors = require('cors')
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const app = express()
 const port = 8080
@@ -67,6 +70,7 @@ let TypeOfRessource = mongoose.model('typeofressource', TypeOfRessourceSchema);
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.json())
 
 
 //------------------------------------------------------------------- Inscription -------------------------------------------------------------------//
@@ -98,12 +102,14 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
   User.findOne({ mailUser: req.body.mailUser }, function(err, obj){
+    
     if(err){
       throw err
     }else{ 
       if(obj != null){
         if(obj.passwordUser == req.body.passwordUser){
-          res.send(obj)
+          const accessToken = jwt.sign(obj.toJSON(), process.env.ACCESS_TOKEN_SECRET)
+          res.json({ accessToken: accessToken})
         }
       }
     }
@@ -248,7 +254,7 @@ app.post('/GetAllCategories', (req, res) => {
       throw err
     }else{ 
       if(obj != null){
-          res.send(obj)
+          res.json(obj)
       }
     }
   })
@@ -365,6 +371,29 @@ app.post('/EditTypeOfRessource', (req, res) => {
     }
   })
 })
+
+
+
+app.post('/api/user/role', (req, res) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  console.log(token)
+  console.log('---------------------------------------------------------------------------------')
+
+  if(token == null){
+    return res.sendStatus(401)
+  }else {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      console.log(user.roleUser)
+        if(err){
+          return res.sendStatus(403)
+        }else {
+          res.send(user.roleUser)
+        }
+    })
+  }
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

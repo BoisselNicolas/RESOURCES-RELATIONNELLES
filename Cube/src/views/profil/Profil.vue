@@ -7,6 +7,7 @@
           <ion-button href="/profil/ressource/add"> Ajouter une ressource </ion-button>
           <ion-button href="/profil/categories"> Catégories </ion-button>
           <ion-button href="/profil/typeressource"> Type de ressource </ion-button>
+
         </ion-item>
 
         <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
@@ -42,6 +43,7 @@ import {
 
 } from "@ionic/vue";
 import { defineComponent } from "vue";
+import AuthenticationService from "../../services/AuthenticationService";
 import RessourceServices from "../../services/Ressources"
 import MenuHeader from '../../views/menu/menuHeader'
 
@@ -79,18 +81,19 @@ export default defineComponent({
 
     },
     async mounted(){
-      this.CurrentUser = sessionStorage.getItem('UserId');
-      if(this.CurrentUser == null){
-        this.$router.push("/profil/login");
-      }
-
+      
       const rslt = await RessourceServices.getRessources();
       this.RessourcesArray = rslt.data
       
-    
+      console.log(sessionStorage.getItem('accessToken'))
+      const role = await AuthenticationService.getRole()
+      sessionStorage.setItem('AccesRole', role.data)
+      console.log(sessionStorage.getItem('AccesRole'))
+
 
  
-    }
+    },
+    
 });
 </script>
 
