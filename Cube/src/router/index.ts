@@ -59,11 +59,10 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profil',
     component: Profil,
     beforeEnter: (to, from, next) => {
-        if(store.state.role == 1){
-          console.log("1")
+        if(store.state.role >= 1){
           next()
         }else{
-          next('/profil/login')
+          next('/home')
         }
         
     }
@@ -81,45 +80,109 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/profil/ressource/add',
     name: 'Profil Ressource Add',
-    component: AddRessource
+    component: AddRessource,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 1){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/ressource/edit/:id',
     name: 'Profil Ressource Edit',
     props: true,
-    component: EditRessource
+    component: EditRessource,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 1){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/categories/add',
     name: 'Profil Categories Add',
-    component: AddCategories
+    component: AddCategories,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 2){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/categories',
     name: 'Profil Categories',
-    component: Categories
+    component: Categories,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 2){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/categories/edit/:id',
     name: 'Profil Categories Edit',
     props: true,
-    component: EditCategories
+    component: EditCategories,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 2){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/typeressource',
     name: 'Profil typeressource',
-    component: TypeDeRessource
+    component: TypeDeRessource,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 2){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/typeressource/add',
     name: 'Profil Type De Ressource Add',
-    component: AddTypeDeRessource
+    component: AddTypeDeRessource,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 2){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   {
     path: '/profil/typeressource/edit/:id',
     name: 'Profil Type De Ressource Edit',
     props: true,
-    component: EditTypeDeRessource
+    component: EditTypeDeRessource,
+    beforeEnter: (to, from, next) => {
+      if(store.state.role >= 2){
+        next()
+      }else{
+        next('/home')
+      }
+      
+  }
   },
   /*  {
     path: '/profil/password/new',

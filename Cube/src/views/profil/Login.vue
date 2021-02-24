@@ -85,9 +85,10 @@ export default defineComponent({
             mailUser: this.mail,
             passwordUser: this.pass
         })
-        sessionStorage.setItem('accessToken', response.data.accessToken) 
 
-        this.$store.commit("SetRole", 1)
+
+        this.$store.commit("SetRole", response.data.accesRole)
+        this.$store.commit("SetToken", response.data.accessToken)
 
         this.$router.replace('/profil');
       

@@ -85,11 +85,11 @@ export default defineComponent({
       const rslt = await RessourceServices.getRessources();
       this.RessourcesArray = rslt.data
       
-      console.log(sessionStorage.getItem('accessToken'))
+/*       console.log(sessionStorage.getItem('accessToken'))
       const role = await AuthenticationService.getRole()
       sessionStorage.setItem('AccesRole', role.data)
       console.log(sessionStorage.getItem('AccesRole'))
-
+ */
 
  
     },

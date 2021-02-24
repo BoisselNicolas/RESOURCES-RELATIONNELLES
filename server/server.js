@@ -30,7 +30,7 @@ const UserSchema = mongoose.Schema(
       lastnameUser: String,
       mailUser: String,
       passwordUser: String,
-      roleUser: String,
+      roleUser: Number,
   }
 );
 
@@ -84,7 +84,7 @@ app.post('/register', (req, res) => {
     firstnameUser: `${req.body.prenomUser}`, 
     mailUser: `${req.body.mailUser}`, 
     passwordUser: `${req.body.passwordUser}`,
-    roleUser: 'Citoyen connecté',
+    roleUser: 0,
   })
 
   newUser.save(function (err) {
@@ -99,6 +99,17 @@ app.post('/register', (req, res) => {
 })
 
 //------------------------------------------------------------------- Connexion -------------------------------------------------------------------//
+// Role User : 
+/*
+* non connecté = 0
+* citoyen connecté = 1 
+* modérateur = 2
+* admin = 3
+* superadmin = 4
+*
+*
+*/
+
 
 app.post('/login', (req, res) => {
   User.findOne({ mailUser: req.body.mailUser }, function(err, obj){
@@ -109,7 +120,10 @@ app.post('/login', (req, res) => {
       if(obj != null){
         if(obj.passwordUser == req.body.passwordUser){
           const accessToken = jwt.sign(obj.toJSON(), process.env.ACCESS_TOKEN_SECRET)
-          res.json({ accessToken: accessToken})
+          res.json({ 
+            accessToken: accessToken,
+            accesRole: obj.roleUser
+          })
         }
       }
     }
@@ -374,25 +388,25 @@ app.post('/EditTypeOfRessource', (req, res) => {
 
 
 
-app.post('/api/user/role', (req, res) => {
+/* app.post('/api/user/role', (req, res) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
   console.log(token)
   console.log('---------------------------------------------------------------------------------')
 
   if(token == null){
-    return res.sendStatus(401)
+    return res.status(401)
   }else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       console.log(user.roleUser)
         if(err){
-          return res.sendStatus(403)
+          return res.status(403)
         }else {
           res.send(user.roleUser)
         }
     })
   }
-})
+}) */
 
 
 app.listen(port, () => {

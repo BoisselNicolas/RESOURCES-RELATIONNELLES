@@ -13,6 +13,15 @@
                       <label>{{ mailUser }}</label><br>
                     </div>
                     <ion-button href="/profil">Account</ion-button>
+                    <ion-button 
+                    v-if="connected"
+                    v-on:Click="IWantToBedisconnected"
+                    >Deconnexion</ion-button>
+
+                    <ion-button 
+                    v-else
+                    v-on:Click="IWantToBeConnected"
+                    >Connexion</ion-button>
                 </ion-col>
                 <ion-col size="10" >Ressource Relationnelles</ion-col>
           </ion-row>
@@ -44,6 +53,7 @@ export default defineComponent({
       nomUser: "",
       prenomUser: "",
       mailUser: "",
+      connected: true
     }
   },
   async mounted(){
@@ -55,6 +65,26 @@ export default defineComponent({
         this.nomUser = user.data.lastnameUser;
         this.prenomUser = user.data.firstnameUser;
         this.mailUser = user.data.mailUser;
+
+
+    }
+
+    if(this.$store.state.token != ""){
+      this.connected = true
+    }else{
+      this.connected = false
+    }
+
+
+  },
+  methods : {
+    IWantToBeConnected(){
+      this.$router.push('/profil/login')
+    },
+    IWantToBedisconnected(){
+      this.$store.commit("SetRole", 0)
+      this.$store.commit("SetToken", "")
+      this.$router.push('/home')
     }
   }
 });
