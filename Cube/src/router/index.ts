@@ -13,6 +13,7 @@ import TypeDeRessource from '../views/TypeDeRessource/Typederessource.vue'
 import AddTypeDeRessource from '../views/TypeDeRessource/AddTypederessource.vue'
 import EditTypeDeRessource from '../views/TypeDeRessource/EditTypeOfRessource.vue'
 import Settings from '../views/profil/Settings.vue'
+import DetailRessource from '../views/ressources/DetailRessource.vue'
 import { store } from "../store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -102,7 +103,13 @@ const routes: Array<RouteRecordRaw> = [
         next('/home')
       }
       
-  }
+    }
+  },
+  {
+    path: '/profil/ressource/:id',
+    name: 'Profil Ressource Detail',
+    props: true,
+    component: DetailRessource
   },
   {
     path: '/profil/ressource/edit/:id',

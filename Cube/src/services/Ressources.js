@@ -10,12 +10,15 @@ export default {
     getOneRessource(id){
         return Api().post('getOneRessource', id)
     },
+    getUserRessources(){
+        return Api().post('getUserRessources')
+    },
     deleteRessource(id){
         return Api().post('deleteRessources', id)
     },
     updateRessource(data){
         return Api().post('editRessource', data)
     }
-
+    
 }
 

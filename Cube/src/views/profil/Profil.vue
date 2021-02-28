@@ -5,22 +5,31 @@
       <div >
         <ion-item>
           <ion-button href="/profil/ressource/add"> Ajouter une ressource </ion-button>
-          <ion-button href="/profil/categories"> Catégories </ion-button>
-          <ion-button href="/profil/typeressource"> Type de ressource </ion-button>
+          <ion-button v-if="$store.state.role >= 2" href="/profil/categories"> Catégories </ion-button>
+          <ion-button v-if="$store.state.role >= 2" href="/profil/typeressource"> Type de ressource </ion-button>
 
         </ion-item>
 
-        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
+        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id" >
           <ion-card-header>
             <ion-card-subtitle>{{ ressource.datePublication }}  - {{ ressource.categories }}</ion-card-subtitle>
-            <ion-card-title>{{ ressource.title }}</ion-card-title>
+            <ion-card-title v-on:click="detailRessource(ressource._id)">{{ ressource.title }}</ion-card-title>
           </ion-card-header>
 
-          <ion-card-content>
+          <ion-card-content v-on:click="detailRessource(ressource._id)">
             {{ ressource.content }}
           </ion-card-content>
-          <ion-button color="warning" v-on:click="editRessource(ressource._id)">Edit</ion-button>
-          <ion-button color="danger" v-on:click="deleteRessource(ressource._id)" >delete</ion-button>
+          <ion-icon 
+          name="create-outline"
+          v-on:click="editRessource(ressource._id)"
+          style="font-size:30px; color: #F1BB39"
+          ></ion-icon>
+          <ion-icon 
+          name="trash-outline" 
+          v-on:click="deleteRessource(ressource._id)" 
+          style="font-size:30px; color: red"
+          ></ion-icon>
+          <ion-button v-on:click="detailRessource(ressource._id)" >Voir plus</ion-button>
           <ion-icon name="accessibility-outline"></ion-icon>
         </ion-card> 
       </div>
@@ -43,9 +52,10 @@ import {
 
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-import AuthenticationService from "../../services/AuthenticationService";
 import RessourceServices from "../../services/Ressources"
 import MenuHeader from '../../views/menu/menuHeader'
+import { addIcons } from 'ionicons';
+import { trashOutline, createOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: "Profil",
@@ -54,6 +64,12 @@ export default defineComponent({
       CurrentUser: "",
       RessourcesArray: [],
     }
+  },
+  created() {
+    addIcons({
+      'trash-outline': trashOutline,
+      'create-outline': createOutline
+    });
   },
   components: {
     IonContent,
@@ -77,13 +93,17 @@ export default defineComponent({
       },
       editRessource(RessourceId){
         this.$router.push(`/profil/ressource/edit/${RessourceId}`)
+      },
+      detailRessource(RessourceId){
+        this.$router.push(`/profil/ressource/${RessourceId}`)
       }
 
     },
     async mounted(){
       
-      const rslt = await RessourceServices.getRessources();
+      const rslt = await RessourceServices.getUserRessources();
       this.RessourcesArray = rslt.data
+      console.log(this.$store.state.role)
       
 /*       console.log(sessionStorage.getItem('accessToken'))
       const role = await AuthenticationService.getRole()

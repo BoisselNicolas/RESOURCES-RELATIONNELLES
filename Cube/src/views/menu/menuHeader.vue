@@ -4,9 +4,15 @@
       <ion-grid>
         <ion-row class="Aligner">
           <ion-col size="2">
-            <ion-button v-on:click="openFirst">Open</ion-button>
+            <ion-icon
+              v-on:click="openFirst"
+              name="menu-outline"
+              style="font-size: 30px"
+            ></ion-icon>
           </ion-col>
-          <ion-col size="10">Ressource Relationnelles</ion-col>
+          <ion-col size="10">
+            <img src="../../img/RR.png" style="height:100px">
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-header>
@@ -22,17 +28,14 @@
           <ion-title>Start Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content >
-          <ion-item href="/home">Accueil</ion-item>
-          <ion-item href="/profil">Profil</ion-item>
-          <ion-item href="/profil/settings">Account</ion-item>
-          <ion-item 
-          v-if="connected" 
-          v-on:Click="IWantToBedisconnected"
+      <ion-content>
+        <ion-item href="/home">Accueil</ion-item>
+        <ion-item href="/profil">Profil</ion-item>
+        <ion-item href="/profil/settings">Account</ion-item>
+        <ion-item v-if="connected" button @click="IWantToBedisconnected"
           >Deconnexion</ion-item
-          >
-          <ion-item v-else href="'/profil/login'">Connexion</ion-item>
-        
+        >
+        <ion-item v-else href="/profil/login">Connexion</ion-item>
       </ion-content>
     </ion-menu>
   </div>
@@ -54,12 +57,13 @@ import {
   menuController,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-
+import { IonIcon } from "@ionic/vue";
+import { addIcons } from "ionicons";
+import { menuOutline } from "ionicons/icons";
 export default defineComponent({
   name: "App",
   components: {
     IonHeader,
-    IonButton,
     IonGrid,
     IonCol,
     IonRow,
@@ -69,6 +73,12 @@ export default defineComponent({
     IonMenu,
     IonTitle,
     IonToolbar,
+    IonIcon,
+  },
+  created() {
+    addIcons({
+      "menu-outline": menuOutline,
+    });
   },
   data() {
     return {
@@ -77,6 +87,15 @@ export default defineComponent({
       mailUser: "",
       connected: true,
     };
+  },
+  setup() {
+    const items = [
+      {
+        text: "logo",
+        src: "../../src/img/RR.png",
+      },
+    ];
+    return { items };
   },
   async mounted() {
     if (this.$store.state.token != "") {
@@ -90,17 +109,19 @@ export default defineComponent({
       this.$router.push("/profil/login");
     },
     IWantToBedisconnected() {
+      this.connected = false;
       this.$store.commit("SetRole", 0);
       this.$store.commit("SetToken", "");
+      menuController.close("first");
       this.$router.replace("/home");
     },
     openFirst() {
       menuController.enable(true, "first");
       menuController.open("first");
     },
-    pushOn(link){
-      this.$router.push(link)
-    }
+    pushOn(link) {
+      this.$router.push(link);
+    },
   },
 });
 </script>
