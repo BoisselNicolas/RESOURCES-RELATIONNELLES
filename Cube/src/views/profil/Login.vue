@@ -90,7 +90,7 @@ export default defineComponent({
         this.$store.commit("SetRole", response.data.accesRole)
         this.$store.commit("SetToken", response.data.accessToken)
 
-        this.$router.replace('/profil');
+        this.$router.push('/profil');
       
     }
 

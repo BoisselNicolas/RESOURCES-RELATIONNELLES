@@ -2,7 +2,10 @@ import Api from './Api'
 
 
 export default {
-    getCurrentUser(id){
-        return Api().post('getCurrentUser', id)
+    getCurrentUser(token){
+        return Api().post('getCurrentUser', token)
+    },
+    updateCurrentUser(data){
+        return Api().post('UpdateCurrentUser', data)
     }
 }

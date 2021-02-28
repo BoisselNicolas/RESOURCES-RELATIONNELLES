@@ -1,6 +1,7 @@
 <template>
   <ion-app>
-     <ion-router-outlet />
+     <menu-header></menu-header>
+     <ion-router-outlet id="main"/>
   </ion-app>
 </template>
 
@@ -8,12 +9,16 @@
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import User from "../src/services/User"
+import MenuHeader from '../src/views/menu/menuHeader'
+
 
 export default defineComponent({
   name: 'App',
   components: {
     IonApp,
     IonRouterOutlet,
+        MenuHeader,
+
   },
   data() {
     return {

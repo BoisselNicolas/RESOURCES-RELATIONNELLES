@@ -1,34 +1,28 @@
 <template>
   <ion-page>
-    <menu-header></menu-header>
-    <ion-content :fullscreen="true">
-      
-
+   
+<!--     <menu-test></menu-test>
+ -->
+    <ion-content >
       <div id="container">
-
-          
         <strong>Ready to create an app?</strong>
         <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
         <ion-button  href="/profil">
           <ion-label>Profil</ion-label>
         </ion-button>
-        <ion-button  href="/profil/login">
-          <ion-label>Login</ion-label>
-        </ion-button>
+        
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage, IonButton, IonLabel} from '@ionic/vue';
+import { IonContent, IonPage, IonButton, IonLabel } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import MenuHeader from '../views/menu/menuHeader'
 export default defineComponent({
   name: 'Home',
   components: {
     IonContent,
-    MenuHeader,
     IonPage,
     IonButton,
     IonLabel

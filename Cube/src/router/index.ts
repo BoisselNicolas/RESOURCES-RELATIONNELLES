@@ -12,6 +12,7 @@ import EditCategories from '../views/categories/EditCategorie.vue'
 import TypeDeRessource from '../views/TypeDeRessource/Typederessource.vue'
 import AddTypeDeRessource from '../views/TypeDeRessource/AddTypederessource.vue'
 import EditTypeDeRessource from '../views/TypeDeRessource/EditTypeOfRessource.vue'
+import Settings from '../views/profil/Settings.vue'
 import { store } from "../store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -60,6 +61,19 @@ const routes: Array<RouteRecordRaw> = [
     component: Profil,
     beforeEnter: (to, from, next) => {
         if(store.state.role >= 1){
+          next()
+        }else{
+          next('/home')
+        }
+        
+    }
+  },
+  {
+    path: '/profil/settings',
+    name: 'Profil Settings',
+    component: Settings,
+    beforeEnter: (to, from, next) => {
+        if(store.state.token != ""){
           next()
         }else{
           next('/home')
