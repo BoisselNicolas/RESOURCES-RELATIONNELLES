@@ -16,48 +16,58 @@ const domain = 'http://localhost:8080/'
  * Import MongoClient & connexion à la DB
  */
 
-mongoose.connect('mongodb://localhost/ravenclaw', function(err) {
+mongoose.connect('mongodb://localhost/ravenclaw', function (err) {
   if (err) { throw err; }
-  else{ console.log("connecté à la base de données") }
+  else { console.log("connecté à la base de données") }
 });
 
 
 
 const UserSchema = mongoose.Schema(
   {
-      //_id: mongoose.ObjectId,
-      firstnameUser: String,
-      lastnameUser: String,
-      mailUser: String,
-      passwordUser: String,
-      roleUser: Number,
+    //_id: mongoose.ObjectId,
+    firstnameUser: String,
+    lastnameUser: String,
+    mailUser: String,
+    passwordUser: String,
+    roleUser: Number,
   }
 );
 
 
 const RessourceSchema = mongoose.Schema(
   {
-      //_id: mongoose.ObjectId,
-      title: String,
-      content: String,
-      categories: String,
-      datePublication: String, 
-      UserId: String,
+    //_id: mongoose.ObjectId,
+    title: String,
+    content: String,
+    categories: String,
+    datePublication: String,
+    UserId: String,
   }
 );
 
 
 const CategoriesSchema = mongoose.Schema(
   {
-      //_id: mongoose.ObjectId,
-      Nom: String,
+    //_id: mongoose.ObjectId,
+    Nom: String,
   }
 );
 
 const TypeOfRessourceSchema = mongoose.Schema(
   {
-      //_id: mongoose.ObjectId,
-      Nom: String,
+    //_id: mongoose.ObjectId,
+    Nom: String,
+  }
+);
+
+const CommentsSchema = mongoose.Schema(
+  {
+    //_id: mongoose.ObjectId,
+    idUser: String,
+    idRessource: String,
+    content: String,
+    datePublication: String,
   }
 );
 
@@ -65,7 +75,7 @@ let User = mongoose.model('user', UserSchema);
 let Ressources = mongoose.model('ressources', RessourceSchema);
 let Categories = mongoose.model('categories', CategoriesSchema);
 let TypeOfRessource = mongoose.model('typeofressource', TypeOfRessourceSchema);
-
+let Comment = mongoose.model('Comment', CommentsSchema)
 
 
 app.use(cors())
@@ -79,10 +89,10 @@ app.use(express.json())
 app.post('/register', (req, res) => {
 
 
-  let newUser = new User({ 
-    lastnameUser: `${req.body.nomUser}`, 
-    firstnameUser: `${req.body.prenomUser}`, 
-    mailUser: `${req.body.mailUser}`, 
+  let newUser = new User({
+    lastnameUser: `${req.body.nomUser}`,
+    firstnameUser: `${req.body.prenomUser}`,
+    mailUser: `${req.body.mailUser}`,
     passwordUser: `${req.body.passwordUser}`,
     roleUser: 0,
   })
@@ -112,15 +122,15 @@ app.post('/register', (req, res) => {
 
 
 app.post('/login', (req, res) => {
-  User.findOne({ mailUser: req.body.mailUser }, function(err, obj){
-    
-    if(err){
+  User.findOne({ mailUser: req.body.mailUser }, function (err, obj) {
+
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-        if(obj.passwordUser == req.body.passwordUser){
+    } else {
+      if (obj != null) {
+        if (obj.passwordUser == req.body.passwordUser) {
           const accessToken = jwt.sign(obj.toJSON(), process.env.ACCESS_TOKEN_SECRET)
-          res.json({ 
+          res.json({
             accessToken: accessToken,
             accesRole: obj.roleUser
           })
@@ -137,27 +147,27 @@ app.post('/getCurrentUser', (req, res) => {
 
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  if(token == null){
+  if (token == null) {
     return res.status(401)
-  }else {
+  } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if(err){
-          return res.status(403)
-        }else {
-          User.findById({ _id: user._id }, function(err, obj){
-            if(err){
-              throw err
-            }else{ 
-              if(obj != null){
-                  res.send({ 
-                    UserNom: obj.lastnameUser,
-                    UserPrenom: obj.firstnameUser,
-                    UserMail: obj.mailUser 
-                   })
-              }
+      if (err) {
+        return res.status(403)
+      } else {
+        User.findById({ _id: user._id }, function (err, obj) {
+          if (err) {
+            throw err
+          } else {
+            if (obj != null) {
+              res.send({
+                UserNom: obj.lastnameUser,
+                UserPrenom: obj.firstnameUser,
+                UserMail: obj.mailUser
+              })
             }
-          })
-        }
+          }
+        })
+      }
     })
   }
 })
@@ -170,24 +180,24 @@ app.post('/UpdateCurrentUser', (req, res) => {
 
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  if(token == null){
+  if (token == null) {
     return res.status(401)
-  }else {
+  } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if(err){
-          return res.status(403)
-        }else {
+      if (err) {
+        return res.status(403)
+      } else {
 
-          User.updateOne({ _id: user._id }, { lastnameUser: req.body.nomUser, firstnameUser: req.body.prenomUser, mailUser: req.body.mailUser}, function(err, obj){
-            if(err){
-              throw err
-            }else{ 
-              if(obj != null){
-                res.send(true)
-              }
+        User.updateOne({ _id: user._id }, { lastnameUser: req.body.nomUser, firstnameUser: req.body.prenomUser, mailUser: req.body.mailUser }, function (err, obj) {
+          if (err) {
+            throw err
+          } else {
+            if (obj != null) {
+              res.send(true)
             }
-          })
-        }
+          }
+        })
+      }
     })
   }
 })
@@ -200,29 +210,29 @@ app.post('/addRessource', (req, res) => {
 
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  if(token == null){
+  if (token == null) {
     return res.status(401)
-  }else {
+  } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if(err){
-          return res.status(403)
-        }else {
-          let newRessource = new Ressources({ 
-            title: `${req.body.titleRessource}`, 
-            content: `${req.body.contentRessource}`, 
-            categories: `${req.body.categoriesRessource}`, 
-            datePublication: Date.now(),
-            UserId: user._id, 
-          })
-        
-          newRessource.save(function (err) {
-            if (err) { throw err; }
-          });
-          res.send("ajouté")
-        }
+      if (err) {
+        return res.status(403)
+      } else {
+        let newRessource = new Ressources({
+          title: `${req.body.titleRessource}`,
+          content: `${req.body.contentRessource}`,
+          categories: `${req.body.categoriesRessource}`,
+          datePublication: Date.now(),
+          UserId: user._id,
+        })
+
+        newRessource.save(function (err) {
+          if (err) { throw err; }
+        });
+        res.send("ajouté")
+      }
     })
   }
-  
+
 })
 
 
@@ -232,12 +242,12 @@ app.post('/addRessource', (req, res) => {
 
 app.post('/getAllRessources', (req, res) => {
 
-  Ressources.find({} , function(err, obj){
-    if(err){
+  Ressources.find({}, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-          res.send(obj)
+    } else {
+      if (obj != null) {
+        res.send(obj)
       }
     }
   })
@@ -251,26 +261,26 @@ app.post('/getAllRessources', (req, res) => {
 app.post('/getUserRessources', (req, res) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  if(token == null){
+  if (token == null) {
     return res.status(401)
-  }else {
+  } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if(err){
-          return res.status(403)
-        }else {
-          Ressources.find({"UserId" :  user._id} , function(err, obj){
-            if(err){
-              throw err
-            }else{ 
-              if(obj != null){
-                  res.send(obj)
-              }
+      if (err) {
+        return res.status(403)
+      } else {
+        Ressources.find({ "UserId": user._id }, function (err, obj) {
+          if (err) {
+            throw err
+          } else {
+            if (obj != null) {
+              res.send(obj)
             }
-          })
-        }
+          }
+        })
+      }
     })
   }
-  
+
 })
 
 
@@ -279,13 +289,13 @@ app.post('/getUserRessources', (req, res) => {
 
 
 app.post('/deleteRessources', (req, res) => {
-console.log(req.body.RessourceId)
-  Ressources.deleteOne({_id: req.body.RessourceId} , function(err){
-    if(err){
+  console.log(req.body.RessourceId)
+  Ressources.deleteOne({ _id: req.body.RessourceId }, function (err) {
+    if (err) {
       throw err
-    }else{ 
-        res.send("Ressource supprimé")      
-        console.log("ressource deleted")
+    } else {
+      res.send("Ressource supprimé")
+      console.log("ressource deleted")
     }
   })
 })
@@ -295,12 +305,12 @@ console.log(req.body.RessourceId)
 
 
 app.post('/getOneRessource', (req, res) => {
-  Ressources.findOne({ _id: req.body.RessourceId }, function(err, obj){
-    if(err){
+  Ressources.findOne({ _id: req.body.RessourceId }, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-          res.send(obj)
+    } else {
+      if (obj != null) {
+        res.send(obj)
       }
     }
   })
@@ -312,11 +322,11 @@ app.post('/getOneRessource', (req, res) => {
 
 
 app.post('/editRessource', (req, res) => {
-  Ressources.updateOne({ _id: req.body.idRessource }, { title: req.body.titleRessource, content: req.body.contentRessource, categories: req.body.categoriesRessource}, function(err, obj){
-    if(err){
+  Ressources.updateOne({ _id: req.body.idRessource }, { title: req.body.titleRessource, content: req.body.contentRessource, categories: req.body.categoriesRessource }, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
+    } else {
+      if (obj != null) {
         console.log("Upadting !")
       }
     }
@@ -327,8 +337,8 @@ app.post('/editRessource', (req, res) => {
 
 app.post('/addCategories', (req, res) => {
 
-  let newCategories = new Categories({ 
-    Nom: `${req.body.nameCat}`, 
+  let newCategories = new Categories({
+    Nom: `${req.body.nameCat}`,
   })
   newCategories.save(function (err) {
     if (err) { throw err; }
@@ -341,25 +351,25 @@ app.post('/addCategories', (req, res) => {
 
 
 app.post('/DeleteCategories', (req, res) => {
-    Categories.deleteOne({_id: req.body.idCategories} , function(err){
-      if(err){
-        throw err
-      }else{ 
-          res.send("Ressource supprimé")      
-          console.log("ressource deleted")
-      }
-    })
+  Categories.deleteOne({ _id: req.body.idCategories }, function (err) {
+    if (err) {
+      throw err
+    } else {
+      res.send("Ressource supprimé")
+      console.log("ressource deleted")
+    }
   })
+})
 
 //------------------------------------------------------------------- Categories - Get All -------------------------------------------------------------------//
 
 app.post('/GetAllCategories', (req, res) => {
-  Categories.find({} , function(err, obj){
-    if(err){
+  Categories.find({}, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-          res.json(obj)
+    } else {
+      if (obj != null) {
+        res.json(obj)
       }
     }
   })
@@ -371,11 +381,11 @@ app.post('/GetAllCategories', (req, res) => {
 
 
 app.post('/EditCategories', (req, res) => {
-  Categories.updateOne({ _id: req.body.idCategorie }, { Nom: req.body.nomCategorie }, function(err, obj){
-    if(err){
+  Categories.updateOne({ _id: req.body.idCategorie }, { Nom: req.body.nomCategorie }, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
+    } else {
+      if (obj != null) {
         res.send('Updating')
       }
     }
@@ -387,12 +397,12 @@ app.post('/EditCategories', (req, res) => {
 
 
 app.post('/getOneCategories', (req, res) => {
-  Categories.findOne({ _id: req.body.CategorieId }, function(err, obj){
-    if(err){
+  Categories.findOne({ _id: req.body.CategorieId }, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-          res.send(obj)
+    } else {
+      if (obj != null) {
+        res.send(obj)
       }
     }
   })
@@ -404,10 +414,10 @@ app.post('/getOneCategories', (req, res) => {
 
 
 app.post('/addTypeOfRessource', (req, res) => {
-  
 
-  let newTypeOfRessource = new TypeOfRessource({ 
-    Nom: `${req.body.NameTypeOfRessource}`, 
+
+  let newTypeOfRessource = new TypeOfRessource({
+    Nom: `${req.body.NameTypeOfRessource}`,
   })
   newTypeOfRessource.save(function (err) {
     if (err) { throw err; }
@@ -419,12 +429,12 @@ app.post('/addTypeOfRessource', (req, res) => {
 //------------------------------------------------------------------- Type Of Ressource - Get All -------------------------------------------------------------------//
 
 app.post('/GetAllTypeOfRessource', (req, res) => {
-  TypeOfRessource.find({} , function(err, obj){
-    if(err){
+  TypeOfRessource.find({}, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-          res.send(obj)
+    } else {
+      if (obj != null) {
+        res.send(obj)
       }
     }
   })
@@ -435,12 +445,12 @@ app.post('/GetAllTypeOfRessource', (req, res) => {
 
 
 app.post('/DeleteTypeOfRessource', (req, res) => {
-  TypeOfRessource.deleteOne({_id: req.body.idTypeOfRessource} , function(err){
-    if(err){
+  TypeOfRessource.deleteOne({ _id: req.body.idTypeOfRessource }, function (err) {
+    if (err) {
       throw err
-    }else{ 
-        res.send("Ressource supprimé")      
-        console.log("ressource deleted")
+    } else {
+      res.send("Ressource supprimé")
+      console.log("ressource deleted")
     }
   })
 })
@@ -450,12 +460,12 @@ app.post('/DeleteTypeOfRessource', (req, res) => {
 
 
 app.post('/getOneTypeOfRessource', (req, res) => {
-  TypeOfRessource.findOne({ _id: req.body.idTypeDeRessource }, function(err, obj){
-    if(err){
+  TypeOfRessource.findOne({ _id: req.body.idTypeDeRessource }, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
-          res.send(obj)
+    } else {
+      if (obj != null) {
+        res.send(obj)
       }
     }
   })
@@ -466,38 +476,70 @@ app.post('/getOneTypeOfRessource', (req, res) => {
 
 
 app.post('/EditTypeOfRessource', (req, res) => {
-  TypeOfRessource.updateOne({ _id: req.body.idTypeDeRessource }, { Nom: req.body.nomTypeOFRessource }, function(err, obj){
-    if(err){
+  TypeOfRessource.updateOne({ _id: req.body.idTypeDeRessource }, { Nom: req.body.nomTypeOFRessource }, function (err, obj) {
+    if (err) {
       throw err
-    }else{ 
-      if(obj != null){
+    } else {
+      if (obj != null) {
         res.send('Updating')
       }
     }
   })
 })
 
+//------------------------------------------------------------------- Add - Comments -------------------------------------------------------------------//
 
 
-/* app.post('/api/user/role', (req, res) => {
+
+app.post('/AddComments', (req, res) => {
+
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  console.log(token)
-  console.log('---------------------------------------------------------------------------------')
-
-  if(token == null){
+  if (token == null) {
     return res.status(401)
-  }else {
+  } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      console.log(user.roleUser)
-        if(err){
-          return res.status(403)
-        }else {
-          res.send(user.roleUser)
-        }
+      if (err) {
+        return res.status(403)
+      } else {
+
+
+        let newComment = new Comment({
+          idUser: `${user._id}`,
+          idRessource: `${req.body.RessourceId}`,
+          content: `${req.body.content}`,
+          datePublication: Date.now(),
+        })
+
+        newComment.save(function (err) {
+          if (err) { throw err; }
+        });
+        res.send("ok")
+      }
     })
   }
-}) */
+})
+
+//------------------------------------------------------------------- GetAll - Comment -------------------------------------------------------------------//
+
+
+
+app.post('/GetAllComment', (req, res) => {
+  Comment.find({idRessource: req.body.RessourceId}, function (err, obj) {
+    if (err) {
+      throw err
+    } else {
+      if (obj != null) {
+        res.send(obj)
+      }
+    }
+  })
+  
+})
+
+
+
+
 
 
 app.listen(port, () => {

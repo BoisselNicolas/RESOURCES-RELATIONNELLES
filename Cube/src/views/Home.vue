@@ -2,21 +2,50 @@
   <ion-page>
     <menu-header></menu-header>
     <ion-content>
-      <div >
-        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id" >
+      <div>
+        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
           <ion-card-header>
-            <ion-card-subtitle>{{ ressource.datePublication }}  - {{ ressource.categories }}</ion-card-subtitle>
-            <ion-card-title v-on:click="detailRessource(ressource._id)">{{ ressource.title }}</ion-card-title>
+            <ion-card-subtitle
+              >{{ TimeStampToDate(ressource.datePublication) }} -
+              {{ ressource.categories }}</ion-card-subtitle
+            >
+            <ion-card-title v-on:click="detailRessource(ressource._id)">{{
+              ressource.title
+            }}</ion-card-title>
           </ion-card-header>
 
-          <ion-card-content v-on:click="detailRessource(ressource._id)" maxlength="10" size="10">
+          <ion-card-content
+            v-on:click="detailRessource(ressource._id)"
+            maxlength="10"
+            size="10"
+          >
             {{ ressource.content }}
           </ion-card-content>
-          <ion-button v-on:click="detailRessource(ressource._id)" >Voir plus</ion-button>
+
           <ion-icon name="accessibility-outline"></ion-icon>
-        
-         
-        </ion-card> 
+          <ion-row class="cardfooter">
+            <ion-col>
+              <ion-icon
+                name="arrow-up-outline"
+                v-on:click="ExploitedRessource(ressource._id)"
+                style="font-size: 30px;"
+              ></ion-icon>
+              <ion-icon
+                name="arrow-down-outline"
+                v-on:click="UnExploitedRessource(ressource._id)"
+                style="font-size: 30px;"
+              ></ion-icon>
+              <ion-icon
+                name="star-outline"
+                v-on:click="FavRessource(ressource._id)"
+                style="font-size: 30px; color: #f1bb39"
+              ></ion-icon>
+              <ion-button v-on:click="detailRessource(ressource._id)"
+                >Voir plus</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-card>
       </div>
     </ion-content>
   </ion-page>
@@ -32,13 +61,15 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
-  IonIcon
-
+  IonIcon,
+  IonCol,
+  IonRow
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-import RessourceServices from "../services/Ressources"
-import MenuHeader from '../views/menu/menuHeader'
-
+import RessourceServices from "../services/Ressources";
+import MenuHeader from "../views/menu/menuHeader";
+import { addIcons } from "ionicons";
+import { arrowUpOutline, arrowDownOutline, starOutline } from "ionicons/icons";
 
 export default defineComponent({
   name: "Profil",
@@ -46,7 +77,14 @@ export default defineComponent({
     return {
       CurrentUser: "",
       RessourcesArray: [],
-    }
+    };
+  },
+  created() {
+    addIcons({
+      "arrow-up-outline": arrowUpOutline,
+      "arrow-down-outline": arrowDownOutline,
+      "star-outline": starOutline,
+    });
   },
   components: {
     IonContent,
@@ -59,37 +97,47 @@ export default defineComponent({
     IonCardHeader,
     IonCardContent,
     IonIcon,
+    IonCol,
+    IonRow
   },
   methods: {
-      async deleteRessource(RessourceId){
-        await RessourceServices.deleteRessource({
-          RessourceId: RessourceId
-        });
-        this.$router.push('/profil')
-      },
-      editRessource(RessourceId){
-        this.$router.push(`/profil/ressource/edit/${RessourceId}`)
-      },
-      detailRessource(RessourceId){
-        this.$router.push(`/profil/ressource/${RessourceId}`)
-      }
-
+    async deleteRessource(RessourceId) {
+      await RessourceServices.deleteRessource({
+        RessourceId: RessourceId,
+      });
+      this.$router.push("/profil");
     },
-    async mounted(){
-      
-      const rslt = await RessourceServices.getRessources();
-      this.RessourcesArray = rslt.data
-      console.log(this.$store.state.role)
-      
-/*       console.log(sessionStorage.getItem('accessToken'))
+    TimeStampToDate: function (timestamp) {
+      const date = new Date(timestamp * 1).toLocaleDateString("FR");
+      return date;
+    },
+    editRessource(RessourceId) {
+      this.$router.push(`/profil/ressource/edit/${RessourceId}`);
+    },
+    detailRessource(RessourceId) {
+      this.$router.push(`/profil/ressource/${RessourceId}`);
+    },
+    ExploitedRessource(RessourceId){
+      console.log("Exploited" + RessourceId)
+    },
+    UnExploitedRessource(RessourceId){
+      console.log("UnExploited" + RessourceId)
+    },
+    FavRessource(RessourceId){
+      console.log("Fav" + RessourceId)
+    }
+  },
+  async mounted() {
+    const rslt = await RessourceServices.getRessources();
+    this.RessourcesArray = rslt.data;
+    console.log(this.$store.state.role);
+
+    /*       console.log(sessionStorage.getItem('accessToken'))
       const role = await AuthenticationService.getRole()
       sessionStorage.setItem('AccesRole', role.data)
       console.log(sessionStorage.getItem('AccesRole'))
  */
-
- 
-    },
-    
+  },
 });
 </script>
 
@@ -121,5 +169,4 @@ export default defineComponent({
 #container a {
   text-decoration: none;
 }
-
 </style>

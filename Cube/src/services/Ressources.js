@@ -18,7 +18,16 @@ export default {
     },
     updateRessource(data){
         return Api().post('editRessource', data)
-    }
+    },
+    ExploitedRessource(data){
+        return Api().post('ExploitedRessource', data)
+    },
+    UnExploitedRessource(data){
+        return Api().post('UnExploitedRessource', data)
+    },
+    FavRessource(data){
+        return Api().post('FavRessource', data)
+    },
     
 }
 

@@ -12,25 +12,31 @@
 
         <ion-card v-for="ressource in RessourcesArray" :key="ressource._id" >
           <ion-card-header>
-            <ion-card-subtitle>{{ ressource.datePublication }}  - {{ ressource.categories }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ TimeStampToDate(ressource.datePublication) }}  - {{ ressource.categories }}</ion-card-subtitle>
             <ion-card-title v-on:click="detailRessource(ressource._id)">{{ ressource.title }}</ion-card-title>
           </ion-card-header>
 
           <ion-card-content v-on:click="detailRessource(ressource._id)">
             {{ ressource.content }}
           </ion-card-content>
-          <ion-icon 
-          name="create-outline"
-          v-on:click="editRessource(ressource._id)"
-          style="font-size:30px; color: #F1BB39"
-          ></ion-icon>
-          <ion-icon 
-          name="trash-outline" 
-          v-on:click="deleteRessource(ressource._id)" 
-          style="font-size:30px; color: red"
-          ></ion-icon>
-          <ion-button v-on:click="detailRessource(ressource._id)" >Voir plus</ion-button>
+          
+          
           <ion-icon name="accessibility-outline"></ion-icon>
+          <ion-row class="cardfooter">
+            <ion-col>
+              <ion-icon 
+              name="create-outline"
+              v-on:click="editRessource(ressource._id)"
+              style="font-size:30px; color: #F1BB39"
+              ></ion-icon>
+              <ion-icon 
+              name="trash-outline" 
+              v-on:click="deleteRessource(ressource._id)" 
+              style="font-size:30px; color: red"
+              ></ion-icon>
+                  <ion-button v-on:click="detailRessource(ressource._id)" >Voir plus</ion-button>
+            </ion-col>
+          </ion-row>
         </ion-card> 
       </div>
     </ion-content>
@@ -96,7 +102,11 @@ export default defineComponent({
       },
       detailRessource(RessourceId){
         this.$router.push(`/profil/ressource/${RessourceId}`)
-      }
+      },
+      TimeStampToDate: function(timestamp){
+        const date = new Date(timestamp * 1).toLocaleDateString("FR")
+        return date
+      },
 
     },
     async mounted(){

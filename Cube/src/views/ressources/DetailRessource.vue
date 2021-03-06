@@ -3,18 +3,34 @@
     <menu-header></menu-header>
     <ion-content class="container">
       <h1>{{ title }}</h1>
-      <label for=""> {{ date }} | {{ categories }} </label>
+      <label for=""> {{ TimeStampToDate(date) }} | {{ categories }} </label>
       <div>
         <label for=""> {{ content }} </label>
       </div>
+      <div class="comment-box">
+          <ion-card v-for="com in CommentsArray" v-bind:key="com._id">
+            <ion-card-content>
+                  <strong>{{com.content}}</strong>
+                  <p>
+                   {{TimeStampToDate(com.datePublication)}}
+                  </p>
+            </ion-card-content>
+
+          </ion-card>
+        </div>
     </ion-content>
+    <ion-footer padding>
+        <ion-textarea  type="text" placeholder="Comment .... " v-model="comment"></ion-textarea>
+        <ion-button ion-button small float-right round v-on:click="addComment">Send</ion-button>
+      </ion-footer>
   </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage } from "@ionic/vue";
+import { IonContent, IonPage, IonButton, IonTextarea, IonFooter, IonCard, IonCardContent } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
+import CommentaireServices from "../../services/Commentaire";
 import MenuHeader from "../menu/menuHeader";
 export default defineComponent({
   name: "Home",
@@ -22,6 +38,11 @@ export default defineComponent({
     IonContent,
     IonPage,
     MenuHeader,
+    IonButton,
+    IonTextarea,
+    IonFooter,
+    IonCard,
+    IonCardContent
   },
   data() {
     return {
@@ -30,12 +51,28 @@ export default defineComponent({
       categories: "",
       date: "",
       id: "",
+      comment: "",
+      CommentsArray: []
     };
   },
   methods: {
     openStart() {
       document.querySelector("#start").open("start");
     },
+    TimeStampToDate: function(timestamp){
+      const date = new Date(timestamp * 1).toLocaleDateString("FR")
+      return date
+    },
+    async addComment(){
+      const rslt = await CommentaireServices.addComment({
+        RessourceId: this.id,
+        content: this.comment
+      })
+      const commentTemp = await CommentaireServices.getAllComments({
+       RessourceId: this.id,
+      })
+      this.CommentsArray = commentTemp.data
+    }
   },
   async mounted() {
     this.id = this.$route.params.id;
@@ -46,7 +83,10 @@ export default defineComponent({
     this.content = rslt.data.content;
     this.categories = rslt.data.categories;
     this.date = rslt.data.datePublication;
-    console.log(rslt);
+    const commentTemp = await CommentaireServices.getAllComments({
+       RessourceId: this.id,
+    })
+    this.CommentsArray = commentTemp.data
   },
 });
 </script>
