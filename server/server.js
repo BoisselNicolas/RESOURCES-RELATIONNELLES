@@ -72,7 +72,13 @@ const CommentsSchema = mongoose.Schema(
   }
 );
 
-
+const FavSchema = mongoose.Schema(
+  {
+    //_id: mongoose.ObjectId,
+    idUser: String,
+    idRessource: String,
+  }
+);
 
 
 let User = mongoose.model('user', UserSchema);
@@ -80,6 +86,7 @@ let Ressources = mongoose.model('ressources', RessourceSchema);
 let Categories = mongoose.model('categories', CategoriesSchema);
 let TypeOfRessource = mongoose.model('typeofressource', TypeOfRessourceSchema);
 let Comment = mongoose.model('Comment', CommentsSchema)
+let Fav = mongoose.model('Fav', FavSchema)
 
 
 app.use(cors())
@@ -145,7 +152,7 @@ app.post('/login', (req, res) => {
             accessToken: accessToken,
             accesRole: obj.roleUser
           })
-        } 
+        }
       }
     }
   })
@@ -269,12 +276,12 @@ app.post('/getAllRessources', (req, res) => {
 
 
 app.post('/RessourceByCat', (req, res) => {
-  Ressources.find({categories: req.body.NomCat }, function (err, obj) {
+  Ressources.find({ categories: req.body.NomCat }, function (err, obj) {
     if (err) {
       throw err
     } else {
-        res.send(obj)
-      
+      res.send(obj)
+
     }
   })
 })
@@ -549,7 +556,7 @@ app.post('/AddComments', (req, res) => {
 
 
 app.post('/GetAllComment', (req, res) => {
-  Comment.find({idRessource: req.body.RessourceId}, function (err, obj) {
+  Comment.find({ idRessource: req.body.RessourceId }, function (err, obj) {
     if (err) {
       throw err
     } else {
@@ -558,7 +565,7 @@ app.post('/GetAllComment', (req, res) => {
       }
     }
   })
-  
+
 })
 
 //------------------------------------------------------------------- Delete - Comment -------------------------------------------------------------------//
@@ -566,7 +573,7 @@ app.post('/GetAllComment', (req, res) => {
 
 
 app.post('/DeleteComment', (req, res) => {
-  
+
   Comment.deleteOne({ _id: req.body.idComment }, function (err) {
     if (err) {
       throw err
@@ -576,11 +583,71 @@ app.post('/DeleteComment', (req, res) => {
     }
   })
 })
+//------------------------------------------------------------------- Add - Fav -------------------------------------------------------------------//
 
 
+app.post('/FavRessource', (req, res) => {
+
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) {
+    return res.status(401)
+  } else {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.status(403)
+      } else {
 
 
+        let newFav = new Fav({
+          idUser: `${user._id}`,
+          idRessource: `${req.body.RessourceId}`,
+        })
 
+        newFav.save(function (err) {
+          if (err) { throw err; }
+        });
+        res.send("ok")
+        console.log("Like")
+      }
+    })
+  }
+})
+
+app.post('/IsFav', (req, res) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) {
+    return res.status(401)
+  } else {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.status(403)
+      } else {
+        Fav.find({ idUser: user._id }, function (err, obj) {
+          if (err) {
+            throw err
+          } else {
+            res.send(obj)
+          }
+        })
+      }
+    })
+  }
+})
+
+
+app.post('/getAllFav', (req, res) => {
+console.log(req.body.idRessource)
+  Ressources.find({ _id: req.body.idRessource }, function (err, obj) {
+    if (err) {
+      throw err
+    } else {
+      res.send(obj)
+    }
+  })
+
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

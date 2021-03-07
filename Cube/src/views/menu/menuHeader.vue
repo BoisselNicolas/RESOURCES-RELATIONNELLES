@@ -31,7 +31,8 @@
       <ion-content>
         <ion-item href="/home">Accueil</ion-item>
         <ion-item href="/profil">Profil</ion-item>
-        <ion-item href="/profil/settings">Account</ion-item>
+        <ion-item href="/profil/fav">Favoris</ion-item>
+        <ion-item href="/profil/settings">Settings</ion-item>
         <ion-item v-if="connected" button @click="IWantToBedisconnected"
           >Deconnexion</ion-item
         >
