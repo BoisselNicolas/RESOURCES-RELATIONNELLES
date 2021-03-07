@@ -145,8 +145,11 @@ export default defineComponent({
     UnExploitedRessource(RessourceId){
       console.log("UnExploited" + RessourceId)
     },
-    FavRessource(RessourceId){
+    async FavRessource(RessourceId){
       console.log("Fav" + RessourceId)
+      await RessourceServices.FavRessource({
+        RessourceId: RessourceId
+      })
     },
     async RessourceByCat(){
       console.log(this.categories)
