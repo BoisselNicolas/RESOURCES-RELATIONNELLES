@@ -264,7 +264,20 @@ app.post('/getAllRessources', (req, res) => {
   })
 })
 
+//------------------------------------------------------------------- Ressources - Get All by cat -------------------------------------------------------------------//
 
+
+
+app.post('/RessourceByCat', (req, res) => {
+  Ressources.find({categories: req.body.NomCat }, function (err, obj) {
+    if (err) {
+      throw err
+    } else {
+        res.send(obj)
+      
+    }
+  })
+})
 //------------------------------------------------------------------- Ressources - Get User Ressource -------------------------------------------------------------------//
 
 

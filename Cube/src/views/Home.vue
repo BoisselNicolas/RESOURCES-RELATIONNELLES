@@ -3,6 +3,16 @@
     <menu-header></menu-header>
     <ion-content>
       <div>
+        <div>
+          <ion-label>Catégorie</ion-label>
+          <ion-select v-model="categories"  v-bind:value="categories" >
+
+            <ion-select-option v-for="cat in CategoriesArray" :key="cat._id" v-bind:value="cat.Nom">{{ cat.Nom }}</ion-select-option>
+            
+          </ion-select>
+          <ion-button v-on:click="RessourceByCat">Filtrer</ion-button>
+        </div>
+
         <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
           <ion-card-header>
             <ion-card-subtitle
@@ -63,20 +73,25 @@ import {
   IonCardContent,
   IonIcon,
   IonCol,
-  IonRow
+  IonRow,
+  IonLabel,
+  IonSelect,
+  IonSelectOption
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../services/Ressources";
 import MenuHeader from "../views/menu/menuHeader";
 import { addIcons } from "ionicons";
 import { arrowUpOutline, arrowDownOutline, starOutline } from "ionicons/icons";
-
+import CategoriesServices from "../services/Categories"
 export default defineComponent({
   name: "Profil",
   data() {
     return {
       CurrentUser: "",
       RessourcesArray: [],
+      categories: "",
+      CategoriesArray: []
     };
   },
   created() {
@@ -98,7 +113,10 @@ export default defineComponent({
     IonCardContent,
     IonIcon,
     IonCol,
-    IonRow
+    IonRow,
+    IonLabel,
+    IonSelect,
+    IonSelectOption
   },
   methods: {
     async deleteRessource(RessourceId) {
@@ -125,18 +143,23 @@ export default defineComponent({
     },
     FavRessource(RessourceId){
       console.log("Fav" + RessourceId)
+    },
+    async RessourceByCat(){
+      console.log(this.categories)
+      const rslt = await RessourceServices.RessourceByCat({
+        NomCat: this.categories
+      })
+      console.log(rslt.data)
+      this.RessourcesArray = rslt.data;
     }
   },
   async mounted() {
     const rslt = await RessourceServices.getRessources();
     this.RessourcesArray = rslt.data;
     console.log(this.$store.state.role);
-
-    /*       console.log(sessionStorage.getItem('accessToken'))
-      const role = await AuthenticationService.getRole()
-      sessionStorage.setItem('AccesRole', role.data)
-      console.log(sessionStorage.getItem('AccesRole'))
- */
+    const cat = await CategoriesServices.GetAllCategories();
+    this.CategoriesArray = cat.data;
+    
   },
 });
 </script>
