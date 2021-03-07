@@ -7,6 +7,9 @@ export default defineComponent({
     },
     getAllComments(RessourceId){
         return Api().post('GetAllComment', RessourceId)
+    },
+    deleteComment(idComment){
+        return Api().post('DeleteComment', idComment)
     }
 })
 

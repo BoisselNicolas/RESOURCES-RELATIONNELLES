@@ -3,7 +3,7 @@
     <menu-header></menu-header>
     <ion-content class="container">
       <h1>{{ title }}</h1>
-      <label for=""> {{ TimeStampToDate(date) }} | {{ categories }} | {{ types }}</label>
+      <label for=""> {{ TimeStampToDate(date) }} | {{ categories }} </label>
       <div>
         <label for=""> {{ content }} </label>
       </div>
@@ -14,7 +14,10 @@
                   <p>
                    {{TimeStampToDate(com.datePublication)}}
                   </p>
+                  
+                  <ion-button v-if="$store.state.role >= 2" v-on:click="deleteComment(com._id)"> Supprimer</ion-button>
             </ion-card-content>
+
 
           </ion-card>
         </div>
@@ -30,7 +33,6 @@
 import { IonContent, IonPage, IonButton, IonTextarea, IonFooter, IonCard, IonCardContent } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
-import TypesServices from "../../services/TypeDeRessource";
 import CommentaireServices from "../../services/Commentaire";
 import MenuHeader from "../menu/menuHeader";
 export default defineComponent({
@@ -51,7 +53,6 @@ export default defineComponent({
       content: "",
       categories: "",
       date: "",
-      types : "",
       id: "",
       comment: "",
       CommentsArray: []
@@ -74,7 +75,17 @@ export default defineComponent({
        RessourceId: this.id,
       })
       this.CommentsArray = commentTemp.data
-    }
+    },
+    async deleteComment(idComment){
+      console.log(idComment)
+      await CommentaireServices.deleteComment({
+        idComment: idComment
+      })
+      const commentTemp = await CommentaireServices.getAllComments({
+       RessourceId: this.id,
+      })
+      this.CommentsArray = commentTemp.data
+    },
   },
   async mounted() {
     this.id = this.$route.params.id;
@@ -85,10 +96,6 @@ export default defineComponent({
     this.content = rslt.data.content;
     this.categories = rslt.data.categories;
     this.date = rslt.data.datePublication;
-    const typeRslt = await TypesServices.getOneRessource({
-      RessourceId : this.id,
-    })
-    this.types = typeRslt.data.Nom;
     const commentTemp = await CommentaireServices.getAllComments({
        RessourceId: this.id,
     })

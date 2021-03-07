@@ -72,6 +72,9 @@ const CommentsSchema = mongoose.Schema(
   }
 );
 
+
+
+
 let User = mongoose.model('user', UserSchema);
 let Ressources = mongoose.model('ressources', RessourceSchema);
 let Categories = mongoose.model('categories', CategoriesSchema);
@@ -468,7 +471,7 @@ app.post('/DeleteTypeOfRessource', (req, res) => {
 
 
 app.post('/getOneTypeOfRessource', (req, res) => {
-  TypeOfRessource.findOne({ _id: req.body.idTypeDeRessource }, function (err, obj) {
+  TypeOfRessource.findOne({ _id: req.body.RessourceId }, function (err, obj) {
     if (err) {
       throw err
     } else {
@@ -543,6 +546,22 @@ app.post('/GetAllComment', (req, res) => {
     }
   })
   
+})
+
+//------------------------------------------------------------------- Delete - Comment -------------------------------------------------------------------//
+
+
+
+app.post('/DeleteComment', (req, res) => {
+  
+  Comment.deleteOne({ _id: req.body.idComment }, function (err) {
+    if (err) {
+      throw err
+    } else {
+      res.send("Commentaire supprimé")
+      console.log("ressource deleted")
+    }
+  })
 })
 
 
