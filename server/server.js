@@ -5,6 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const MD5 = require('crypto-js/md5')
 
 const app = express()
 const port = 8080
@@ -88,23 +89,35 @@ app.use(express.json())
 
 app.post('/register', (req, res) => {
 
+  User.findOne({ mailUser: req.body.mailUser }, function (err, obj) {
 
-  let newUser = new User({
-    lastnameUser: `${req.body.nomUser}`,
-    firstnameUser: `${req.body.prenomUser}`,
-    mailUser: `${req.body.mailUser}`,
-    passwordUser: `${req.body.passwordUser}`,
-    roleUser: 0,
-  })
+    if (err) {
+      throw err
+    } else {
+      if (obj == null) {
+        let hash = MD5(req.body.passwordUser);
 
-  newUser.save(function (err) {
-    if (err) { throw err; }
-  });
-  res.send({
-    name: `firstname : ${req.body.prenomUser}`,
-    lastname: `lastname:  ${req.body.nomUser}`,
-    mail: `mail :  ${req.body.mailUser}`,
-    pass: `password ${req.body.passwordUser} `
+        let newUser = new User({
+          lastnameUser: `${req.body.nomUser}`,
+          firstnameUser: `${req.body.prenomUser}`,
+          mailUser: `${req.body.mailUser}`,
+          passwordUser: hash,
+          roleUser: 1,
+        })
+
+        newUser.save(function (err) {
+          if (err) { throw err; }
+        });
+        res.send({
+          name: `firstname : ${req.body.prenomUser}`,
+          lastname: `lastname:  ${req.body.nomUser}`,
+          mail: `mail :  ${req.body.mailUser}`,
+          pass: `password ${req.body.passwordUser} `
+        })
+      } else {
+        console.log("Adresse email déjà utilisée !");
+      }
+    }
   })
 })
 
@@ -128,7 +141,7 @@ app.post('/login', (req, res) => {
       throw err
     } else {
       if (obj != null) {
-        if (obj.passwordUser == req.body.passwordUser) {
+        if (obj.passwordUser == MD5(req.body.passwordUser)) {
           const accessToken = jwt.sign(obj.toJSON(), process.env.ACCESS_TOKEN_SECRET)
           res.json({
             accessToken: accessToken,
