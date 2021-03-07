@@ -15,7 +15,7 @@
                    {{TimeStampToDate(com.datePublication)}}
                   </p>
                   
-                  <ion-button v-if="$store.state.role >= 2" v-on:click="deleteComment(com._id)"> Supprimer</ion-button>
+                  <ion-button v-if="$store.state.role <= 2" v-on:click="deleteComment(com._id)"> Supprimer</ion-button>
             </ion-card-content>
 
 
