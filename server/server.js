@@ -108,14 +108,9 @@ app.post('/register', (req, res) => {
         newUser.save(function (err) {
           if (err) { throw err; }
         });
-        res.send({
-          name: `firstname : ${req.body.prenomUser}`,
-          lastname: `lastname:  ${req.body.nomUser}`,
-          mail: `mail :  ${req.body.mailUser}`,
-          pass: `password ${req.body.passwordUser} `
-        })
+        res.send("ok")
       } else {
-        console.log("Adresse email déjà utilisée !");
+        res.send("Adresse email déjà utilisée !")
       }
     }
   })
@@ -136,7 +131,7 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
   User.findOne({ mailUser: req.body.mailUser }, function (err, obj) {
-
+    console.log(obj)
     if (err) {
       throw err
     } else {
@@ -147,7 +142,7 @@ app.post('/login', (req, res) => {
             accessToken: accessToken,
             accesRole: obj.roleUser
           })
-        }
+        } 
       }
     }
   })

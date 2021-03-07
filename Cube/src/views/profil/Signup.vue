@@ -15,7 +15,10 @@
       </ion-header>
     
       <div id="container">
+          <label for="" style="color:red"> {{ response.data }} </label>
+
           <ion-item>
+            
             <label>Nom</label>
             <input type="text" placeholder="Nom" v-model="lastname">
           </ion-item>
@@ -54,6 +57,7 @@ export default defineComponent({
       firstname: "",
       mail: "",
       password: "",
+      response: ""
     }
   },
   components: {
@@ -68,10 +72,10 @@ export default defineComponent({
   methods: {
     async registration () {
       
-        console.log(this.firstname);
-        console.log(this.lastname);
-        console.log(this.mail);
-        console.log(this.password);
+      console.log(this.firstname);
+      console.log(this.lastname);
+      console.log(this.mail);
+      console.log(this.password);
 
       const response = await AuthenticationService.register({
         nomUser: this.lastname,
@@ -79,10 +83,11 @@ export default defineComponent({
         mailUser: this.mail,
         passwordUser: this.password,
       })
-      console.log(response.data)
-
-
-
+      console.log(response)
+      this.response = response
+      if(response.data == "ok"){
+        this.$router.push('/profil/login')
+      }
     }
   }
 });
