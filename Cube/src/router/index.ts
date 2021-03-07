@@ -14,6 +14,7 @@ import AddTypeDeRessource from '../views/TypeDeRessource/AddTypederessource.vue'
 import EditTypeDeRessource from '../views/TypeDeRessource/EditTypeOfRessource.vue'
 import Settings from '../views/profil/Settings.vue'
 import DetailRessource from '../views/ressources/DetailRessource.vue'
+import Favories from '../views/profil/Fav.vue'
 import { store } from "../store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -73,6 +74,19 @@ const routes: Array<RouteRecordRaw> = [
     path: '/profil/settings',
     name: 'Profil Settings',
     component: Settings,
+    beforeEnter: (to, from, next) => {
+        if(store.state.token != ""){
+          next()
+        }else{
+          next('/home')
+        }
+        
+    }
+  },
+  {
+    path: '/profil/fav',
+    name: 'Profil Fav',
+    component: Favories,
     beforeEnter: (to, from, next) => {
         if(store.state.token != ""){
           next()

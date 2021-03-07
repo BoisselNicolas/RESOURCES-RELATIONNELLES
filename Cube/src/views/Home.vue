@@ -4,6 +4,7 @@
     <ion-content>
       <div>
         <div>
+          <ion-input type="text" placeholder="Rechercher un article" v-model="filterText"></ion-input>
           <ion-label>Catégorie</ion-label>
           <ion-select v-model="categories"  v-bind:value="categories" >
 
@@ -13,7 +14,7 @@
           <ion-button v-on:click="RessourceByCat">Filtrer</ion-button>
         </div>
 
-        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
+        <ion-card v-for="ressource in filteredList(RessourcesArray, filterText)" :key="ressource._id">
           <ion-card-header>
             <ion-card-subtitle
               >{{ TimeStampToDate(ressource.datePublication) }} -
@@ -76,7 +77,8 @@ import {
   IonRow,
   IonLabel,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
+  IonInput
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../services/Ressources";
@@ -91,7 +93,8 @@ export default defineComponent({
       CurrentUser: "",
       RessourcesArray: [],
       categories: "",
-      CategoriesArray: []
+      CategoriesArray: [],
+      filterText: ""
     };
   },
   created() {
@@ -116,7 +119,8 @@ export default defineComponent({
     IonRow,
     IonLabel,
     IonSelect,
-    IonSelectOption
+    IonSelectOption,
+    IonInput
   },
   methods: {
     async deleteRessource(RessourceId) {
@@ -141,8 +145,11 @@ export default defineComponent({
     UnExploitedRessource(RessourceId){
       console.log("UnExploited" + RessourceId)
     },
-    FavRessource(RessourceId){
+    async FavRessource(RessourceId){
       console.log("Fav" + RessourceId)
+      await RessourceServices.FavRessource({
+        RessourceId: RessourceId
+      })
     },
     async RessourceByCat(){
       console.log(this.categories)
@@ -151,6 +158,14 @@ export default defineComponent({
       })
       console.log(rslt.data)
       this.RessourcesArray = rslt.data;
+    },
+    filteredList(RessourcesArray,filterText) {
+        if (!filterText) {
+            return  [ ... RessourcesArray];
+        }
+        return RessourcesArray.filter( (ressource) => {
+            return ressource.title.match(new RegExp(filterText, 'i'));
+        })
     }
   },
   async mounted() {
