@@ -31,6 +31,16 @@
           </ion-select>
         </ion-item>
         <ion-item>
+          <ion-label>Type</ion-label>
+          <ion-select v-model="types" v-bind:aria-valuemax="types">
+            <ion-select-option
+              v-for="typ in TypesArray"
+              :key="typ._id"
+              v-bind:value="typ.Nom"
+            >{{typ.Nom}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
           <ion-button v-on:click="NewRessource">Ajouter</ion-button>
         </ion-item>
       </div>
@@ -43,7 +53,8 @@ import { IonContent, IonItem, IonButton, IonPage, IonSelect, IonSelectOption, Io
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
 import MenuHeader from "../menu/menuHeader.vue";
-import CategoriesServices from "../../services/Categories"
+import CategoriesServices from "../../services/Categories";
+import TypesServices from "../../services/TypeDeRessource";
 
 export default defineComponent({
   name: "Profil Ressource Add",
@@ -62,8 +73,10 @@ export default defineComponent({
     return {
       title: "",
       categories: "",
+      types: "",
       content: "",
-      CategoriesArray: []
+      CategoriesArray: [],
+      TypesArray: []
     };
   },
   methods: {
@@ -80,6 +93,8 @@ export default defineComponent({
   async mounted(){
       const cat = await CategoriesServices.GetAllCategories();
       this.CategoriesArray = cat.data;
+      const typ = await TypesServices.GetAllTypeOfRessource();
+      this.TypesArray = typ.data;
   }
 });
 </script>

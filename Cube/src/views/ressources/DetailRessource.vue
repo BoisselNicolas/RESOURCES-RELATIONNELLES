@@ -14,7 +14,10 @@
                   <p>
                    {{TimeStampToDate(com.datePublication)}}
                   </p>
+                  
+                  <ion-button v-if="$store.state.role >= 2" v-on:click="deleteComment(com._id)"> Supprimer</ion-button>
             </ion-card-content>
+
 
           </ion-card>
         </div>
@@ -72,7 +75,17 @@ export default defineComponent({
        RessourceId: this.id,
       })
       this.CommentsArray = commentTemp.data
-    }
+    },
+    async deleteComment(idComment){
+      console.log(idComment)
+      await CommentaireServices.deleteComment({
+        idComment: idComment
+      })
+      const commentTemp = await CommentaireServices.getAllComments({
+       RessourceId: this.id,
+      })
+      this.CommentsArray = commentTemp.data
+    },
   },
   async mounted() {
     this.id = this.$route.params.id;

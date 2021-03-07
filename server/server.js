@@ -5,6 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const MD5 = require('crypto-js/md5')
 
 const app = express()
 const port = 8080
@@ -71,6 +72,9 @@ const CommentsSchema = mongoose.Schema(
   }
 );
 
+
+
+
 let User = mongoose.model('user', UserSchema);
 let Ressources = mongoose.model('ressources', RessourceSchema);
 let Categories = mongoose.model('categories', CategoriesSchema);
@@ -88,23 +92,30 @@ app.use(express.json())
 
 app.post('/register', (req, res) => {
 
+  User.findOne({ mailUser: req.body.mailUser }, function (err, obj) {
 
-  let newUser = new User({
-    lastnameUser: `${req.body.nomUser}`,
-    firstnameUser: `${req.body.prenomUser}`,
-    mailUser: `${req.body.mailUser}`,
-    passwordUser: `${req.body.passwordUser}`,
-    roleUser: 0,
-  })
+    if (err) {
+      throw err
+    } else {
+      if (obj == null) {
+        let hash = MD5(req.body.passwordUser);
 
-  newUser.save(function (err) {
-    if (err) { throw err; }
-  });
-  res.send({
-    name: `firstname : ${req.body.prenomUser}`,
-    lastname: `lastname:  ${req.body.nomUser}`,
-    mail: `mail :  ${req.body.mailUser}`,
-    pass: `password ${req.body.passwordUser} `
+        let newUser = new User({
+          lastnameUser: `${req.body.nomUser}`,
+          firstnameUser: `${req.body.prenomUser}`,
+          mailUser: `${req.body.mailUser}`,
+          passwordUser: hash,
+          roleUser: 1,
+        })
+
+        newUser.save(function (err) {
+          if (err) { throw err; }
+        });
+        res.send("ok")
+      } else {
+        res.send("Adresse email déjà utilisée !")
+      }
+    }
   })
 })
 
@@ -123,18 +134,18 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
   User.findOne({ mailUser: req.body.mailUser }, function (err, obj) {
-
+    console.log(obj)
     if (err) {
       throw err
     } else {
       if (obj != null) {
-        if (obj.passwordUser == req.body.passwordUser) {
+        if (obj.passwordUser == MD5(req.body.passwordUser)) {
           const accessToken = jwt.sign(obj.toJSON(), process.env.ACCESS_TOKEN_SECRET)
           res.json({
             accessToken: accessToken,
             accesRole: obj.roleUser
           })
-        }
+        } 
       }
     }
   })
@@ -253,7 +264,20 @@ app.post('/getAllRessources', (req, res) => {
   })
 })
 
+//------------------------------------------------------------------- Ressources - Get All by cat -------------------------------------------------------------------//
 
+
+
+app.post('/RessourceByCat', (req, res) => {
+  Ressources.find({categories: req.body.NomCat }, function (err, obj) {
+    if (err) {
+      throw err
+    } else {
+        res.send(obj)
+      
+    }
+  })
+})
 //------------------------------------------------------------------- Ressources - Get User Ressource -------------------------------------------------------------------//
 
 
@@ -460,7 +484,7 @@ app.post('/DeleteTypeOfRessource', (req, res) => {
 
 
 app.post('/getOneTypeOfRessource', (req, res) => {
-  TypeOfRessource.findOne({ _id: req.body.idTypeDeRessource }, function (err, obj) {
+  TypeOfRessource.findOne({ _id: req.body.RessourceId }, function (err, obj) {
     if (err) {
       throw err
     } else {
@@ -535,6 +559,22 @@ app.post('/GetAllComment', (req, res) => {
     }
   })
   
+})
+
+//------------------------------------------------------------------- Delete - Comment -------------------------------------------------------------------//
+
+
+
+app.post('/DeleteComment', (req, res) => {
+  
+  Comment.deleteOne({ _id: req.body.idComment }, function (err) {
+    if (err) {
+      throw err
+    } else {
+      res.send("Commentaire supprimé")
+      console.log("ressource deleted")
+    }
+  })
 })
 
 

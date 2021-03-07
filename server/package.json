@@ -21,6 +21,8 @@
         "superlogin": "^0.6.1"
     },
     "dependencies": {
+        "blueimp-md5": "^2.18.0",
+        "crypto-js": "^4.0.0",
         "dotenv": "^8.2.0",
         "jsonwebtoken": "^8.5.1"
     }

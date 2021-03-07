@@ -28,6 +28,8 @@ export default {
     FavRessource(data){
         return Api().post('FavRessource', data)
     },
-    
+    RessourceByCat(NomCat){
+        return Api().post('RessourceByCat', NomCat)
+    }
 }
 
