@@ -6,7 +6,7 @@
         <div>
           <ion-input type="text" placeholder="Rechercher un article" v-model="filterText"></ion-input>
           <ion-label>Catégorie</ion-label>
-          <ion-select v-model="categories"  v-bind:value="categories" >
+          <ion-select v-model="categories"  v-bind:value="categories" style="background-color: #febc59 ; color: white">
 
             <ion-select-option v-for="cat in CategoriesArray" :key="cat._id" v-bind:value="cat.Nom">{{ cat.Nom }}</ion-select-option>
             

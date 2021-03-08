@@ -95,7 +95,8 @@ export default defineComponent({
         await RessourceServices.deleteRessource({
           RessourceId: RessourceId
         });
-        this.$router.push('/profil')
+        const rslt = await RessourceServices.getUserRessources();
+        this.RessourcesArray = rslt.data
       },
       editRessource(RessourceId){
         this.$router.push(`/profil/ressource/edit/${RessourceId}`)
