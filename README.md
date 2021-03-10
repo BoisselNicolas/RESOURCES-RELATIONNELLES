@@ -1,8 +1,8 @@
 # (RE)SOURCES RELATIONNELLES
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)]
 
-[![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)]
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)]
 
 Cesi Ecole Supérieur de l'alternance
 
