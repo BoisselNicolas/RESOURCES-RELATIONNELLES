@@ -8,28 +8,25 @@ Promotion : RILS2020
 ## Pré-Requis
 
  - MongoDB
- - npm
  - node
+ - npm
+
 
 ### Installation
 ```
 git clone git@gitlab.com:BoisselNicolas/ravenclaw.git
 ```
 
-A la racine du dossier ravenclaw
-
-Installer les paquets
+Installation les paquets de notre API
 
 ```
-$ cd server/
+$ cd ravenclaw/server/
 $ npm install
 ```
 
-A la racine du dossier ravenclaw
-
-Installer les paquets
+Installer les paquets nécessaire à IONIC
 ```
-$ cd Cube/
+$ cd ravenclaw/Cube/
 $ npm install
 ```
 
@@ -53,9 +50,7 @@ $ ionic serve
 
 Front-End :_
 * IONIC 
-* Vue JS 
-
-* [Atom](https://atom.io/) - Editeur de textes
+* ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png) Vue JS 
 
 Back-End :_
 * Express JS
