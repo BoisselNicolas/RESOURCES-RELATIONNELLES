@@ -53,7 +53,7 @@ $ ionic serve
 
 Front-End :_
 * IONIC 
-* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png" alt="drawing" style="width:50px;"/> Vue JS 
+* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png" alt="drawing" width="50px" style="width:50px;"/> Vue JS 
 
 Back-End :_
 * Express JS
