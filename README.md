@@ -5,24 +5,36 @@ Cesi Ecole Supérieur de l'alternance
 
 Promotion : RILS2020
 
-## Pour commencer
+## Pré-Requis
+
+ - MongoDB
+ - npm
+ - node
+
+### Installation
 ```
 git clone git@gitlab.com:BoisselNicolas/ravenclaw.git
 ```
-### Installation
-
-Les étapes pour installer votre programme....
-
-Dites ce qu'il faut faire...
-
-_exemple_: Executez la commande ``telnet mapscii.me`` pour commencer ensuite [...]
 
 
-Ensuite vous pouvez montrer ce que vous obtenez au final...
 
 ## Démarrage
+A la racine du dossier ravenclaw
 
-Dites comment faire pour lancer votre projet
+```
+cd server/
+```
+```
+node server.js
+```
+A la racine du dossier ravenclaw
+```
+cd Cube/
+```
+
+```
+ionic serve
+```
 
 ## Fabriqué avec
 
