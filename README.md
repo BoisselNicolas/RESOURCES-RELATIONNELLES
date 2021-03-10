@@ -59,7 +59,7 @@ Back-End :_
 * Express <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png" alt="drawing" width="20px" />  
 
 BDD :
-* <img src="https://www.globant.com/sites/default/files/2021-01/MongoDB_Logo_FullColorBlack_RGB-4td3yuxzjs.png" alt="drawing" width="150px" /> 
+* <img src="https://www.globant.com/sites/default/files/2021-01/MongoDB_Logo_FullColorBlack_RGB-4td3yuxzjs.png" alt="drawing" width="125px" /> 
 
 Environnement :_
 * <img src="https://www.armandphilippot.com/wp-content/uploads/2020/03/vs-code.jpg" alt="drawing" width="20px" /> VS Code
