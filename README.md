@@ -1,10 +1,5 @@
 <img src="https://ecole-alternance.cesi.fr/wp-content/themes/cesi/static/logo/ecole-alternance.svg">
 
-Cesi Ecole Supérieur de l'alternance
-
-Promotion : RILS2020
-
-
 # (RE)SOURCES RELATIONNELLES
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)]()
 
