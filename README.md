@@ -2,6 +2,7 @@
 
 # (RE)SOURCES RELATIONNELLES
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)]()
+[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)]()
 
 [![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)]()
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)]()
