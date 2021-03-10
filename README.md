@@ -37,14 +37,14 @@ $ npm install
 
 
 ## Démarrage
-Démarrer notre API
+Démarrer l'API
 
 ```
 $ cd ravenclaw/server/
 $ node server.js
 ```
 
-Démarrer notre server d'IONIC
+Démarrer IONIC
 ```
 $ cd ravenclaw/Cube/
 $ ionic serve
