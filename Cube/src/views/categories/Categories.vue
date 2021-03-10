@@ -42,7 +42,8 @@ export default {
             await CategoriesServices.DeleteCategories({
                idCategories: id
             });
-            this.$router.push('/profil/categories')
+          const rslt = await CategoriesServices.GetAllCategories();
+          this.CategoriesArray = rslt.data;
         },
         editCategories(id){
             this.$router.push(`/profil/categories/edit/${id}`)

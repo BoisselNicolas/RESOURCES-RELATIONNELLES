@@ -37,7 +37,7 @@ export default {
                 idCategorie: this.id,
                 nomCategorie: this.nameCategorie
             })
-            this.$router.push('/profil/categories')
+            this.$router.replace('/profil/categories')
         }
     },
     components: {
