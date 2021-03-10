@@ -6,9 +6,9 @@ Cesi Ecole Supérieur de l'alternance
 Promotion : RILS2020
 
 ## Pour commencer
-
+```
 git clone git@gitlab.com:BoisselNicolas/ravenclaw.git
-
+```
 ### Installation
 
 Les étapes pour installer votre programme....
