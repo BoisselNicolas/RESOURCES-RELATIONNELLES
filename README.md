@@ -63,7 +63,7 @@ BDD :
 
 Environnement :_
 * <img src="https://www.armandphilippot.com/wp-content/uploads/2020/03/vs-code.jpg" alt="drawing" width="20px" /> VS Code
-* <img src="https://user-images.githubusercontent.com/31940713/47532692-1041e400-d87f-11e8-8bf5-584b22e9a37a.png" alt="drawing" width="20px" /> Linux Mint
+* <img src="https://www.nicepng.com/png/full/65-653471_linux-mint-comments-linux-mint-icon-black.png" alt="drawing" width="20px" /> Linux Mint
 
 
 ## Versions
