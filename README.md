@@ -1,9 +1,8 @@
 # (RE)SOURCES RELATIONNELLES
-_(juste en dessous des badges sympatiques à placer)_
-
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 Cesi Ecole Supérieur de l'alternance
+
 Promotion : RILS2020
 
 ## Pour commencer
