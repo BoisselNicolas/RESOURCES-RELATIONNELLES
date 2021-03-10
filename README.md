@@ -18,47 +18,36 @@ git clone git@gitlab.com:BoisselNicolas/ravenclaw.git
 
 A la racine du dossier ravenclaw
 
-Se déplacer dans le dossier de notre API
+Installer les paquets
 
 ```
-cd server/
+$ cd server/
+$ npm install
 ```
-Installer les paquets
-```
-npm install
-```
+
 A la racine du dossier ravenclaw
 
-Se déplacer dans le dossier de notre application IONIC
-```
-cd Cube/
-```
 Installer les paquets
 ```
-npm install
+$ cd Cube/
+$ npm install
 ```
+
 
 ## Démarrage
-A la racine du dossier ravenclaw
-
-Se déplacer dans le dossier de notre API
-
-```
-cd server/
-```
 Démarrer notre API
+
 ```
-node server.js
+$ cd ravenclaw/server/
+$ node server.js
 ```
-A la racine du dossier ravenclaw
-Se déplacer dans le dossier d'IONIC
+
+Démarrer notre server d'IONIC
 ```
-cd Cube/
+$ cd ravenclaw/Cube/
+$ ionic serve
 ```
-Démarrer notre server
-```
-ionic serve
-```
+
 
 ## Fabriqué avec
 
