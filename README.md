@@ -56,7 +56,7 @@ Front-End :_
 * <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png" alt="drawing" width="20px" /> Vue JS 
 
 Back-End :_
-* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png" alt="drawing" width="20px" /> Express JS
+* Express <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png" alt="drawing" width="20px" />  
 
 BDD :
 * <img src="https://prnewswire2-a.akamaihd.net/p/1893751/sp/189375100/thumbnail/entry_id/0_prmivf9l/def_height/400/def_width/400/version/100031/type/1" alt="drawing" width="20px" /> MongoDB
