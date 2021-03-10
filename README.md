@@ -53,7 +53,7 @@ $ ionic serve
 
 Front-End :_
 * IONIC 
-* Vue JS 
+* ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png?image=100) Vue JS 
 
 Back-End :_
 * Express JS
@@ -74,7 +74,7 @@ Environnement :_
 ## Auteurs
 
 * **BOISSEL Nicolas** 
-* **LABAT Corention**
+* **LABAT Corentin**
 
 
 
