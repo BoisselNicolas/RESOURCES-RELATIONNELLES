@@ -96,11 +96,12 @@ export default defineComponent({
     ];
     return { items };
   },
-  async mounted() {
+  mounted() {
     if (this.$store.state.token != "") {
-      this.connected = true;
+      this.connected = "Deconnexion";
+
     } else {
-      this.connected = false;
+      this.connected = "Connexion";
     }
   },
   methods: {
@@ -111,7 +112,6 @@ export default defineComponent({
       this.connected = false;
       this.$store.commit("SetRole", 0);
       this.$store.commit("SetToken", "");
-      menuController.close("first");
       this.$router.replace("/home");
     },
     openFirst() {
@@ -121,7 +121,7 @@ export default defineComponent({
     pushOn(link) {
       this.$router.push(link);
     },
-  },
+  }
 });
 </script>
 <style scoped>

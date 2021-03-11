@@ -2,7 +2,7 @@
   <ion-page>
     <menu-header></menu-header>
     <ion-content>
-      <div >
+      <div>
         <ion-item>
           <ion-button href="/profil/ressource/add"> Ajouter une ressource </ion-button>
           <ion-button v-if="$store.state.role >= 2" href="/profil/categories"> Catégories </ion-button>
@@ -108,21 +108,13 @@ export default defineComponent({
         const date = new Date(timestamp * 1).toLocaleDateString("FR")
         return date
       },
-
     },
     async mounted(){
       
       const rslt = await RessourceServices.getUserRessources();
       this.RessourcesArray = rslt.data
       console.log(this.$store.state.role)
-      
-/*       console.log(sessionStorage.getItem('accessToken'))
-      const role = await AuthenticationService.getRole()
-      sessionStorage.setItem('AccesRole', role.data)
-      console.log(sessionStorage.getItem('AccesRole'))
- */
-
- 
+       
     },
     
 });
