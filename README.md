@@ -19,7 +19,7 @@
 ### Installation
 
 ```
-git clone git@github.com:BoisselNicolas/RESOURCES-RELATIONNELLES.git
+$ git clone git@github.com:BoisselNicolas/RESOURCES-RELATIONNELLES.git
 ```
 
 Installation les paquets de notre API
