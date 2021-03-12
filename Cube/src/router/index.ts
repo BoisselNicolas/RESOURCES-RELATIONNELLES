@@ -25,49 +25,19 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     name: 'Home',
-    component: Home ,
+    component: Home,
   },
-/*  {
-    path: '/ressource/search',
-    name: 'Ressource Search',
-    component: Home
-  },
-  {
-    path: '/ressource/details',
-    name: 'Ressource Details',
-    component: Home
-  },
-  {
-    path: '/ressource/comments',
-    name: 'Ressource comments',
-    component: Home
-  },
-  {
-    path: '/categories',
-    name: 'Categories',
-    component: Home
-  },
-  {
-    path: '/ressource/edit',
-    name: 'Ressource Edit',
-    component: Home
-  },
-  {
-    path: '/ressource/validation',
-    name: 'Ressource Validation',
-    component: Home
-  }, */
   {
     path: '/profil',
     name: 'Profil',
     component: Profil,
     beforeEnter: (to, from, next) => {
-        if(store.state.role >= 1){
-          next()
-        }else{
-          next('/home')
-        }
-        
+      if (store.state.role >= 1) {
+        next()
+      } else {
+        next('/home')
+      }
+
     }
   },
   {
@@ -75,12 +45,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profil Settings',
     component: Settings,
     beforeEnter: (to, from, next) => {
-        if(store.state.token != ""){
-          next()
-        }else{
-          next('/home')
-        }
-        
+      if (store.state.token != "") {
+        next()
+      } else {
+        next('/home')
+      }
+
     }
   },
   {
@@ -88,15 +58,15 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profil Fav',
     component: Favories,
     beforeEnter: (to, from, next) => {
-        if(store.state.token != ""){
-          next()
-        }else{
-          next('/home')
-        }
-        
+      if (store.state.token != "") {
+        next()
+      } else {
+        next('/home')
+      }
+
     }
   },
- {
+  {
     path: '/profil/login',
     name: 'Profil Login',
     component: Login
@@ -111,12 +81,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Profil Ressource Add',
     component: AddRessource,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 1){
+      if (store.state.role >= 1) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
+
     }
   },
   {
@@ -131,39 +101,39 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
     component: EditRessource,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 1){
+      if (store.state.role >= 1) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
   {
     path: '/profil/categories/add',
     name: 'Profil Categories Add',
     component: AddCategories,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 2){
+      if (store.state.role >= 2) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
   {
     path: '/profil/categories',
     name: 'Profil Categories',
     component: Categories,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 2){
+      if (store.state.role >= 2) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
   {
     path: '/profil/categories/edit/:id',
@@ -171,39 +141,39 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
     component: EditCategories,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 2){
+      if (store.state.role >= 2) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
   {
     path: '/profil/typeressource',
     name: 'Profil typeressource',
     component: TypeDeRessource,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 2){
+      if (store.state.role >= 2) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
   {
     path: '/profil/typeressource/add',
     name: 'Profil Type De Ressource Add',
     component: AddTypeDeRessource,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 2){
+      if (store.state.role >= 2) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
   {
     path: '/profil/typeressource/edit/:id',
@@ -211,55 +181,14 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
     component: EditTypeDeRessource,
     beforeEnter: (to, from, next) => {
-      if(store.state.role >= 2){
+      if (store.state.role >= 2) {
         next()
-      }else{
+      } else {
         next('/home')
       }
-      
-  }
+
+    }
   },
-  /*  {
-    path: '/profil/password/new',
-    name: 'Profil New Password',
-    component: Home
-  },
-  {
-    path: '/profil/ressource',
-    name: 'Profil Ressource',
-    component: Home
-  },
-  
-  {
-    path: '/profil/ressource/exploited',
-    name: 'Ressource Exploited',
-    component: Home
-  },
-  {
-    path: '/profil/ressource/waiting',
-    name: 'Ressource Waiting',
-    component: Home
-  },
-  {
-    path: '/profil/ressource/favorites',
-    name: 'Ressource Favorites',
-    component: Home
-  },
-  {
-    path: '/profil/account',
-    name: 'Account',
-    component: Home
-  },
-  {
-    path: '/profil/settings',
-    name: 'Edit',
-    component: Home
-  },
-  {
-    path: '/profil/dashboard',
-    name: 'Dashboard',
-    component: Home
-  },  */
 ]
 
 const router = createRouter({

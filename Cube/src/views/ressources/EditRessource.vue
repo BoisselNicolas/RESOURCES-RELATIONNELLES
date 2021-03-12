@@ -4,7 +4,11 @@
     <ion-content>
       <div class="content">
         <ion-item>
-          <ion-textarea   v-bind:value="title" placeholder="Titre" v-model="title"></ion-textarea>
+          <ion-textarea
+            v-bind:value="title"
+            placeholder="Titre"
+            v-model="title"
+          ></ion-textarea>
         </ion-item>
         <ion-item>
           <ion-textarea
@@ -17,12 +21,14 @@
         </ion-item>
         <ion-item>
           <ion-label>Catégorie</ion-label>
-          <ion-select v-model="categories"  v-bind:value="categories" >
-
-            <ion-select-option v-for="cat in CategoriesArray" :key="cat._id" v-bind:value="cat.Nom">{{ cat.Nom }}</ion-select-option>
-            
+          <ion-select v-model="categories" v-bind:value="categories">
+            <ion-select-option
+              v-for="cat in CategoriesArray"
+              :key="cat._id"
+              v-bind:value="cat.Nom"
+              >{{ cat.Nom }}</ion-select-option
+            >
           </ion-select>
-          
         </ion-item>
         <ion-item>
           <ion-button v-on:click="editRessource">Mettre à jour</ion-button>
@@ -33,10 +39,19 @@
 </template>
 
 <script>
-import { IonContent, IonItem, IonButton, IonPage, IonSelect, IonSelectOption, IonLabel, IonTextarea } from "@ionic/vue";
+import {
+  IonContent,
+  IonItem,
+  IonButton,
+  IonPage,
+  IonSelect,
+  IonSelectOption,
+  IonLabel,
+  IonTextarea,
+} from "@ionic/vue";
 import RessourceServices from "../../services/Ressources";
 import MenuHeader from "../../views/menu/menuHeader";
-import CategoriesServices from "../../services/Categories"
+import CategoriesServices from "../../services/Categories";
 
 export default {
   name: "Edit Ressource",
@@ -46,7 +61,7 @@ export default {
       content: "",
       categories: "",
       id: "",
-      CategoriesArray: []
+      CategoriesArray: [],
     };
   },
   methods: {
@@ -57,10 +72,10 @@ export default {
         categoriesRessource: this.categories,
         idRessource: this.id,
       });
-      console.log(this.categories)
-      console.log(this.title)
-      console.log(this.content)
-      this.$router.push('/profil')
+      console.log(this.categories);
+      console.log(this.title);
+      console.log(this.content);
+      this.$router.push("/profil");
     },
   },
   async mounted() {
@@ -83,7 +98,7 @@ export default {
     IonSelect,
     IonSelectOption,
     IonLabel,
-    IonTextarea
+    IonTextarea,
   },
 };
 </script>

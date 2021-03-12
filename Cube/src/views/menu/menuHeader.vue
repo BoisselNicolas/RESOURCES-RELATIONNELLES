@@ -11,7 +11,7 @@
             ></ion-icon>
           </ion-col>
           <ion-col size="10">
-            <img src="../../img/RR.png" style="height:100px">
+            <img src="../../img/RR.png" style="height: 100px" />
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -99,7 +99,6 @@ export default defineComponent({
   mounted() {
     if (this.$store.state.token != "") {
       this.connected = "Deconnexion";
-
     } else {
       this.connected = "Connexion";
     }
@@ -121,7 +120,7 @@ export default defineComponent({
     pushOn(link) {
       this.$router.push(link);
     },
-  }
+  },
 });
 </script>
 <style scoped>

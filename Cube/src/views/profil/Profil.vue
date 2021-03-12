@@ -4,40 +4,53 @@
     <ion-content>
       <div>
         <ion-item>
-          <ion-button href="/profil/ressource/add"> Ajouter une ressource </ion-button>
-          <ion-button v-if="$store.state.role >= 2" href="/profil/categories"> Catégories </ion-button>
-          <ion-button v-if="$store.state.role >= 2" href="/profil/typeressource"> Type de ressource </ion-button>
-
+          <ion-button href="/profil/ressource/add">
+            Ajouter une ressource
+          </ion-button>
+          <ion-button v-if="$store.state.role >= 2" href="/profil/categories">
+            Catégories
+          </ion-button>
+          <ion-button
+            v-if="$store.state.role >= 2"
+            href="/profil/typeressource"
+          >
+            Type de ressource
+          </ion-button>
         </ion-item>
 
-        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id" >
+        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
           <ion-card-header>
-            <ion-card-subtitle>{{ TimeStampToDate(ressource.datePublication) }}  - {{ ressource.categories }}</ion-card-subtitle>
-            <ion-card-title v-on:click="detailRessource(ressource._id)">{{ ressource.title }}</ion-card-title>
+            <ion-card-subtitle>
+              {{ TimeStampToDate(ressource.datePublication) }} - {{ ressource.categories }}
+            </ion-card-subtitle>
+            <ion-card-title v-on:click="detailRessource(ressource._id)">{{
+              ressource.title
+            }}</ion-card-title>
           </ion-card-header>
 
           <ion-card-content v-on:click="detailRessource(ressource._id)">
             {{ ressource.content }}
           </ion-card-content>
-          
-          
+
           <ion-icon name="accessibility-outline"></ion-icon>
           <ion-row class="cardfooter">
             <ion-col>
-              <ion-icon 
-              name="create-outline"
-              v-on:click="editRessource(ressource._id)"
-              style="font-size:30px; color: #F1BB39"
+              <ion-icon
+                name="create-outline"
+                v-on:click="editRessource(ressource._id)"
+                style="font-size: 30px; color: #f1bb39"
               ></ion-icon>
-              <ion-icon 
-              name="trash-outline" 
-              v-on:click="deleteRessource(ressource._id)" 
-              style="font-size:30px; color: red"
+              <ion-icon
+                name="trash-outline"
+                v-on:click="deleteRessource(ressource._id)"
+                style="font-size: 30px; color: red"
               ></ion-icon>
-                  <ion-button v-on:click="detailRessource(ressource._id)" >Voir plus</ion-button>
+              <ion-button v-on:click="detailRessource(ressource._id)"
+                >Voir plus</ion-button
+              >
             </ion-col>
           </ion-row>
-        </ion-card> 
+        </ion-card>
       </div>
     </ion-content>
   </ion-page>
@@ -54,14 +67,13 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
-  IonIcon
-
+  IonIcon,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-import RessourceServices from "../../services/Ressources"
-import MenuHeader from '../../views/menu/menuHeader'
-import { addIcons } from 'ionicons';
-import { trashOutline, createOutline } from 'ionicons/icons';
+import RessourceServices from "../../services/Ressources";
+import MenuHeader from "../../views/menu/menuHeader";
+import { addIcons } from "ionicons";
+import { trashOutline, createOutline } from "ionicons/icons";
 
 export default defineComponent({
   name: "Profil",
@@ -69,12 +81,12 @@ export default defineComponent({
     return {
       CurrentUser: "",
       RessourcesArray: [],
-    }
+    };
   },
   created() {
     addIcons({
-      'trash-outline': trashOutline,
-      'create-outline': createOutline
+      "trash-outline": trashOutline,
+      "create-outline": createOutline,
     });
   },
   components: {
@@ -91,32 +103,29 @@ export default defineComponent({
     IonIcon,
   },
   methods: {
-      async deleteRessource(RessourceId){
-        await RessourceServices.deleteRessource({
-          RessourceId: RessourceId
-        });
-        const rslt = await RessourceServices.getUserRessources();
-        this.RessourcesArray = rslt.data
-      },
-      editRessource(RessourceId){
-        this.$router.push(`/profil/ressource/edit/${RessourceId}`)
-      },
-      detailRessource(RessourceId){
-        this.$router.push(`/profil/ressource/${RessourceId}`)
-      },
-      TimeStampToDate: function(timestamp){
-        const date = new Date(timestamp * 1).toLocaleDateString("FR")
-        return date
-      },
-    },
-    async mounted(){
-      
+    async deleteRessource(RessourceId) {
+      await RessourceServices.deleteRessource({
+        RessourceId: RessourceId,
+      });
       const rslt = await RessourceServices.getUserRessources();
-      this.RessourcesArray = rslt.data
-      console.log(this.$store.state.role)
-       
+      this.RessourcesArray = rslt.data;
     },
-    
+    editRessource(RessourceId) {
+      this.$router.push(`/profil/ressource/edit/${RessourceId}`);
+    },
+    detailRessource(RessourceId) {
+      this.$router.push(`/profil/ressource/${RessourceId}`);
+    },
+    TimeStampToDate: function (timestamp) {
+      const date = new Date(timestamp * 1).toLocaleDateString("FR");
+      return date;
+    },
+  },
+  async mounted() {
+    const rslt = await RessourceServices.getUserRessources();
+    this.RessourcesArray = rslt.data;
+    console.log(this.$store.state.role);
+  },
 });
 </script>
 
@@ -148,5 +157,4 @@ export default defineComponent({
 #container a {
   text-decoration: none;
 }
-
 </style>

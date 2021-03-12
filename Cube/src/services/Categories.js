@@ -1,19 +1,19 @@
 import Api from './Api'
 
 export default {
-    AddCategories (name){
+    AddCategories(name) {
         return Api().post('addCategories', name)
     },
-    GetAllCategories (){
+    GetAllCategories() {
         return Api().post('GetAllCategories')
     },
-    DeleteCategories (id){
+    DeleteCategories(id) {
         return Api().post('DeleteCategories', id)
     },
-    EditCategories (id){
+    EditCategories(id) {
         return Api().post('EditCategories', id)
     },
-    getOneCategorie(id){
+    getOneCategorie(id) {
         return Api().post('getOneCategories', id)
     }
 }

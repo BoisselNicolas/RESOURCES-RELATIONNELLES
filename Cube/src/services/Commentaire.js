@@ -2,13 +2,13 @@ import Api from './Api'
 import { defineComponent } from "vue";
 
 export default defineComponent({
-    addComment (RessourceId){
+    addComment(RessourceId) {
         return Api().post('AddComments', RessourceId)
     },
-    getAllComments(RessourceId){
+    getAllComments(RessourceId) {
         return Api().post('GetAllComment', RessourceId)
     },
-    deleteComment(idComment){
+    deleteComment(idComment) {
         return Api().post('DeleteComment', idComment)
     }
 })

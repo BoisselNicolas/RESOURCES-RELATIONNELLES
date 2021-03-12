@@ -8,29 +8,46 @@
         <label for=""> {{ content }} </label>
       </div>
       <div class="comment-box">
-          <ion-card v-for="com in CommentsArray" v-bind:key="com._id">
-            <ion-card-content>
-                  <strong>{{com.content}}</strong>
-                  <p>
-                   {{TimeStampToDate(com.datePublication)}}
-                  </p>
-                  
-                  <ion-button v-if="$store.state.role >= 2" v-on:click="deleteComment(com._id)"> Supprimer</ion-button>
-            </ion-card-content>
+        <ion-card v-for="com in CommentsArray" v-bind:key="com._id">
+          <ion-card-content>
+            <strong>{{ com.content }}</strong>
+            <p>
+              {{ TimeStampToDate(com.datePublication) }}
+            </p>
 
-
-          </ion-card>
-        </div>
+            <ion-button
+              v-if="$store.state.role >= 2"
+              v-on:click="deleteComment(com._id)"
+            >
+              Supprimer</ion-button
+            >
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ion-content>
     <ion-footer padding>
-        <ion-textarea  type="text" placeholder="Comment .... " v-model="comment"></ion-textarea>
-        <ion-button ion-button small float-right round v-on:click="addComment">Send</ion-button>
-      </ion-footer>
+      <ion-textarea
+        type="text"
+        placeholder="Comment .... "
+        v-model="comment"
+      ></ion-textarea>
+      <ion-button ion-button small float-right round v-on:click="addComment"
+        >Send</ion-button
+      >
+    </ion-footer>
   </ion-page>
 </template>
 
 <script>
-import { IonContent, IonPage, IonButton, IonTextarea, IonFooter, IonCard, IonCardContent } from "@ionic/vue";
+import {
+  IonContent,
+  IonPage,
+  IonButton,
+  IonTextarea,
+  IonFooter,
+  IonCard,
+  IonCardContent,
+} from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
 import CommentaireServices from "../../services/Commentaire";
@@ -45,7 +62,7 @@ export default defineComponent({
     IonTextarea,
     IonFooter,
     IonCard,
-    IonCardContent
+    IonCardContent,
   },
   data() {
     return {
@@ -55,36 +72,36 @@ export default defineComponent({
       date: "",
       id: "",
       comment: "",
-      CommentsArray: []
+      CommentsArray: [],
     };
   },
   methods: {
     openStart() {
       document.querySelector("#start").open("start");
     },
-    TimeStampToDate: function(timestamp){
-      const date = new Date(timestamp * 1).toLocaleDateString("FR")
-      return date
+    TimeStampToDate: function (timestamp) {
+      const date = new Date(timestamp * 1).toLocaleDateString("FR");
+      return date;
     },
-    async addComment(){
+    async addComment() {
       const rslt = await CommentaireServices.addComment({
         RessourceId: this.id,
-        content: this.comment
-      })
+        content: this.comment,
+      });
       const commentTemp = await CommentaireServices.getAllComments({
-       RessourceId: this.id,
-      })
-      this.CommentsArray = commentTemp.data
+        RessourceId: this.id,
+      });
+      this.CommentsArray = commentTemp.data;
     },
-    async deleteComment(idComment){
-      console.log(idComment)
+    async deleteComment(idComment) {
+      console.log(idComment);
       await CommentaireServices.deleteComment({
-        idComment: idComment
-      })
+        idComment: idComment,
+      });
       const commentTemp = await CommentaireServices.getAllComments({
-       RessourceId: this.id,
-      })
-      this.CommentsArray = commentTemp.data
+        RessourceId: this.id,
+      });
+      this.CommentsArray = commentTemp.data;
     },
   },
   async mounted() {
@@ -97,9 +114,9 @@ export default defineComponent({
     this.categories = rslt.data.categories;
     this.date = rslt.data.datePublication;
     const commentTemp = await CommentaireServices.getAllComments({
-       RessourceId: this.id,
-    })
-    this.CommentsArray = commentTemp.data
+      RessourceId: this.id,
+    });
+    this.CommentsArray = commentTemp.data;
   },
 });
 </script>

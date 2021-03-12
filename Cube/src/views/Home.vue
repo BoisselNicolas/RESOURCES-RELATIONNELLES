@@ -4,17 +4,31 @@
     <ion-content>
       <div>
         <div>
-          <ion-input type="text" placeholder="Rechercher un article" v-model="filterText"></ion-input>
+          <ion-input
+            type="text"
+            placeholder="Rechercher un article"
+            v-model="filterText"
+          ></ion-input>
           <ion-label>Catégorie</ion-label>
-          <ion-select v-model="categories"  v-bind:value="categories" style="background-color: #febc59 ; color: white">
-
-            <ion-select-option v-for="cat in CategoriesArray" :key="cat._id" v-bind:value="cat.Nom">{{ cat.Nom }}</ion-select-option>
-            
+          <ion-select
+            v-model="categories"
+            v-bind:value="categories"
+            style="background-color: #febc59; color: white"
+          >
+            <ion-select-option
+              v-for="cat in CategoriesArray"
+              :key="cat._id"
+              v-bind:value="cat.Nom"
+              >{{ cat.Nom }}</ion-select-option
+            >
           </ion-select>
           <ion-button v-on:click="RessourceByCat">Filtrer</ion-button>
         </div>
 
-        <ion-card v-for="ressource in filteredList(RessourcesArray, filterText)" :key="ressource._id">
+        <ion-card
+          v-for="ressource in filteredList(RessourcesArray, filterText)"
+          :key="ressource._id"
+        >
           <ion-card-header>
             <ion-card-subtitle
               >{{ TimeStampToDate(ressource.datePublication) }} -
@@ -39,12 +53,12 @@
               <ion-icon
                 name="arrow-up-outline"
                 v-on:click="ExploitedRessource(ressource._id)"
-                style="font-size: 30px;"
+                style="font-size: 30px"
               ></ion-icon>
               <ion-icon
                 name="arrow-down-outline"
                 v-on:click="UnExploitedRessource(ressource._id)"
-                style="font-size: 30px;"
+                style="font-size: 30px"
               ></ion-icon>
               <ion-icon
                 name="star-outline"
@@ -78,14 +92,14 @@ import {
   IonLabel,
   IonSelect,
   IonSelectOption,
-  IonInput
+  IonInput,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../services/Ressources";
 import MenuHeader from "../views/menu/menuHeader";
 import { addIcons } from "ionicons";
 import { arrowUpOutline, arrowDownOutline, starOutline } from "ionicons/icons";
-import CategoriesServices from "../services/Categories"
+import CategoriesServices from "../services/Categories";
 export default defineComponent({
   name: "Profil",
   data() {
@@ -94,7 +108,7 @@ export default defineComponent({
       RessourcesArray: [],
       categories: "",
       CategoriesArray: [],
-      filterText: ""
+      filterText: "",
     };
   },
   created() {
@@ -120,7 +134,7 @@ export default defineComponent({
     IonLabel,
     IonSelect,
     IonSelectOption,
-    IonInput
+    IonInput,
   },
   methods: {
     async deleteRessource(RessourceId) {
@@ -139,34 +153,34 @@ export default defineComponent({
     detailRessource(RessourceId) {
       this.$router.push(`/profil/ressource/${RessourceId}`);
     },
-    ExploitedRessource(RessourceId){
-      console.log("Exploited" + RessourceId)
+    ExploitedRessource(RessourceId) {
+      console.log("Exploited" + RessourceId);
     },
-    UnExploitedRessource(RessourceId){
-      console.log("UnExploited" + RessourceId)
+    UnExploitedRessource(RessourceId) {
+      console.log("UnExploited" + RessourceId);
     },
-    async FavRessource(RessourceId){
-      console.log("Fav" + RessourceId)
+    async FavRessource(RessourceId) {
+      console.log("Fav" + RessourceId);
       await RessourceServices.FavRessource({
-        RessourceId: RessourceId
-      })
+        RessourceId: RessourceId,
+      });
     },
-    async RessourceByCat(){
-      console.log(this.categories)
+    async RessourceByCat() {
+      console.log(this.categories);
       const rslt = await RessourceServices.RessourceByCat({
-        NomCat: this.categories
-      })
-      console.log(rslt.data)
+        NomCat: this.categories,
+      });
+      console.log(rslt.data);
       this.RessourcesArray = rslt.data;
     },
-    filteredList(RessourcesArray,filterText) {
-        if (!filterText) {
-            return  [ ... RessourcesArray];
-        }
-        return RessourcesArray.filter( (ressource) => {
-            return ressource.title.match(new RegExp(filterText, 'i'));
-        })
-    }
+    filteredList(RessourcesArray, filterText) {
+      if (!filterText) {
+        return [...RessourcesArray];
+      }
+      return RessourcesArray.filter((ressource) => {
+        return ressource.title.match(new RegExp(filterText, "i"));
+      });
+    },
   },
   async mounted() {
     const rslt = await RessourceServices.getRessources();
@@ -174,7 +188,6 @@ export default defineComponent({
     console.log(this.$store.state.role);
     const cat = await CategoriesServices.GetAllCategories();
     this.CategoriesArray = cat.data;
-    
   },
 });
 </script>

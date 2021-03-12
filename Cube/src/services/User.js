@@ -1,11 +1,10 @@
 import Api from './Api'
 
-
 export default {
-    getCurrentUser(token){
+    getCurrentUser(token) {
         return Api().post('getCurrentUser', token)
     },
-    updateCurrentUser(data){
+    updateCurrentUser(data) {
         return Api().post('UpdateCurrentUser', data)
     }
 }

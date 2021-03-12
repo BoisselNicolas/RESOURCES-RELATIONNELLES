@@ -17,13 +17,11 @@
             color="light"
             type="password"
             placeholder="Mot de passe"
-             v-model="pass"
+            v-model="pass"
           ></ion-input>
         </ion-item>
         <ion-item lines="none">
-          <ion-button color="light" slot="end" fill="clear"
-            >Mot de passe oublié ?</ion-button
-          >
+          <ion-button color="light" slot="end" fill="clear">Mot de passe oublié ?</ion-button>
         </ion-item>
         <ion-button
           v-on:click="loginUser"
@@ -31,7 +29,6 @@
           expand="block"
           shape="round"
           fill="outline"
-         
           >Connexion</ion-button
         >
         <br />
@@ -57,19 +54,19 @@ import {
   IonButton,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-import AuthenticationService from "../../services/AuthenticationService"
-import { useStore } from 'vuex';
+import AuthenticationService from "../../services/AuthenticationService";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Profil",
   data() {
     return {
-        error: "",
-        messages: [],
-        mail: "",
-        pass: "",
-        temp: ""
-    }
+      error: "",
+      messages: [],
+      mail: "",
+      pass: "",
+      temp: "",
+    };
   },
   components: {
     IonContent,
@@ -79,29 +76,23 @@ export default defineComponent({
     IonInput,
     IonButton,
   },
-    methods: {
-      async loginUser () {
-        const response = await AuthenticationService.login({
-            mailUser: this.mail,
-            passwordUser: this.pass
-        })
-        console.log(response)
-
-        this.$store.commit("SetRole", response.data.accesRole)
-        this.$store.commit("SetToken", response.data.accessToken)
-
-        this.$router.push('/profil');
-      
-    }
-
+  methods: {
+    async loginUser() {
+      const response = await AuthenticationService.login({
+        mailUser: this.mail,
+        passwordUser: this.pass,
+      });
+      this.$store.commit("SetRole", response.data.accesRole);
+      this.$store.commit("SetToken", response.data.accessToken);
+      this.$router.push("/profil");
     },
+  },
 });
 </script>
 
 <style scoped>
 #container {
   text-align: center;
-
   position: absolute;
   left: 0;
   right: 0;
@@ -117,9 +108,7 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-
   color: #8c8c8c;
-
   margin: 0;
 }
 

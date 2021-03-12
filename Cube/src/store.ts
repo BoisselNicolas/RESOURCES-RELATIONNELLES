@@ -4,7 +4,6 @@ import createPersistedState from "vuex-persistedstate";
 import * as Cookies from 'js-cookie';
 import cookie from 'cookie';
 
-
 export const store = createStore({
   plugins: [createPersistedState({
     storage: {
@@ -13,19 +12,13 @@ export const store = createStore({
       removeItem: key => Cookies.remove(key)
     }
   })],
-  state () {
+  state() {
     return {
       role: 0,
       token: ""
     }
   },
   mutations: {
-    /* SetRole(state: any, status: any){
-        state.role = status
-    },
-    SetToken(state: any, status: any){
-      state.token = status
-    }, */
     SetRole: (state: any, status) => state.role = status,
     SetToken: (state: any, status) => state.token = status
   }

@@ -1,69 +1,65 @@
 <template>
-    <ion-page>
-        <menu-header></menu-header>
-        <ion-content>
-            <h1>Informations personnelles</h1>
-            <div>
-              <ion-label>Nom</ion-label>
-              <input type="text" placeholder="Nom" v-model="nomUser">
-            </div>
-            <div>
-              <ion-label>Prenom</ion-label>
-              <input type="text" placeholder="Prenom" v-model="prenomUser">
-            </div>
-            <div>
-              <ion-label>Mail</ion-label>
-              <input type="text" placeholder="Mail" v-model="mailUser">
-            </div>
-            <ion-button
-            v-on:click="UpdateUser"
-            >Mettre à jour </ion-button>
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <menu-header></menu-header>
+    <ion-content>
+      <h1>Informations personnelles</h1>
+      <div>
+        <ion-label>Nom</ion-label>
+        <input type="text" placeholder="Nom" v-model="nomUser" />
+      </div>
+      <div>
+        <ion-label>Prenom</ion-label>
+        <input type="text" placeholder="Prenom" v-model="prenomUser" />
+      </div>
+      <div>
+        <ion-label>Mail</ion-label>
+        <input type="text" placeholder="Mail" v-model="mailUser" />
+      </div>
+      <ion-button v-on:click="UpdateUser">Mettre à jour </ion-button>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script >
-import { IonPage, IonContent, IonLabel, IonButton } from '@ionic/vue';
-import { defineComponent } from 'vue';
-import MenuHeader from '../menu/menuHeader.vue';
-import User from "../../../src/services/User"
-
+import { IonPage, IonContent, IonLabel, IonButton } from "@ionic/vue";
+import { defineComponent } from "vue";
+import MenuHeader from "../menu/menuHeader.vue";
+import User from "../../../src/services/User";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
-      IonPage,
-      MenuHeader,
-      IonContent,
-      IonLabel,
-      IonButton
+    IonPage,
+    MenuHeader,
+    IonContent,
+    IonLabel,
+    IonButton,
   },
   data() {
-  
     return {
       nomUser: "",
       prenomUser: "",
       mailUser: "",
-      connected: true
-    }
+      connected: true,
+    };
   },
-  async mounted(){
+  async mounted() {
     const token = this.$store.state.token;
-    const rslt = await User.getCurrentUser({token: token})
-    this.nomUser = rslt.data.UserNom
-    this.prenomUser = rslt.data.UserPrenom
-    this.mailUser = rslt.data.UserMail
+    const rslt = await User.getCurrentUser({ token: token });
+    this.nomUser = rslt.data.UserNom;
+    this.prenomUser = rslt.data.UserPrenom;
+    this.mailUser = rslt.data.UserMail;
   },
-  methods : {
-    async UpdateUser(){
+  methods: {
+    async UpdateUser() {
       await User.updateCurrentUser({
-        nomUser: this.nomUser, 
+        nomUser: this.nomUser,
         prenomUser: this.prenomUser,
         mailUser: this.mailUser,
-      })
-      this.$router.push('/profil/settings')
-    }
-  }
+      });
+      this.$router.push("/profil/settings");
+    },
+  },
 });
 </script>
 <style scoped>

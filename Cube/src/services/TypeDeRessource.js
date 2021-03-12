@@ -1,19 +1,19 @@
 import Api from './Api'
 
 export default {
-    AddTypeOfRessource (name){
+    AddTypeOfRessource(name) {
         return Api().post('addTypeOfRessource', name)
     },
-    GetAllTypeOfRessource (){
+    GetAllTypeOfRessource() {
         return Api().post('GetAllTypeOfRessource')
     },
-    DeleteTypeOfRessource (id){
+    DeleteTypeOfRessource(id) {
         return Api().post('DeleteTypeOfRessource', id)
     },
-    EditTypeOfRessource (id){
+    EditTypeOfRessource(id) {
         return Api().post('EditTypeOfRessource', id)
     },
-    getOneTypeOfRessource(id){
+    getOneTypeOfRessource(id) {
         return Api().post('getOneTypeOfRessource', id)
     }
 }

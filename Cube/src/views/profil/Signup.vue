@@ -5,39 +5,38 @@
         <ion-title>Inscription</ion-title>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">Inscription</ion-title>
         </ion-toolbar>
-        
       </ion-header>
-    
-      <div id="container">
-          <label for="" style="color:red"> {{ response.data }} </label>
 
-          <ion-item>
-            
-            <label>Nom</label>
-            <input type="text" placeholder="Nom" v-model="lastname">
-          </ion-item>
+      <div id="container">
+        <label for="" style="color: red"> {{ response.data }} </label>
+        <ion-item>
+          <label>Nom</label>
+          <input type="text" placeholder="Nom" v-model="lastname" />
+        </ion-item>
         <ion-item>
           <label>Prénom</label>
-          <input type="text" placeholder="Prenom" v-model="firstname">
+          <input type="text" placeholder="Prenom" v-model="firstname" />
         </ion-item>
         <ion-item>
           <label>Mail</label>
-          <input type="text"  placeholder="Mail" v-model="mail">
+          <input type="text" placeholder="Mail" v-model="mail" />
         </ion-item>
         <ion-item>
           <label>Mot de passe</label>
-          <input type="password"  placeholder="Mot de passe" v-model="password">
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            v-model="password"
+          />
         </ion-item>
         <ion-item>
-          <ion-button
-          v-on:click="registration"
-          >  Je m'inscris</ion-button>
+          <ion-button v-on:click="registration"> Je m'inscris</ion-button>
         </ion-item>
       </div>
     </ion-content>
@@ -45,20 +44,28 @@
 </template>
 
 <script>
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton} from '@ionic/vue';
-import { defineComponent } from 'vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonItem,
+  IonButton,
+} from "@ionic/vue";
+import { defineComponent } from "vue";
 import AuthenticationService from "../../services/AuthenticationService";
 
 export default defineComponent({
-  name: 'SignUp',
-  data(){
-    return{
+  name: "SignUp",
+  data() {
+    return {
       lastname: "",
       firstname: "",
       mail: "",
       password: "",
-      response: ""
-    }
+      response: "",
+    };
   },
   components: {
     IonContent,
@@ -67,11 +74,10 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     IonItem,
-    IonButton
+    IonButton,
   },
   methods: {
-    async registration () {
-      
+    async registration() {
       console.log(this.firstname);
       console.log(this.lastname);
       console.log(this.mail);
@@ -82,21 +88,21 @@ export default defineComponent({
         prenomUser: this.firstname,
         mailUser: this.mail,
         passwordUser: this.password,
-      })
-      console.log(response)
-      this.response = response
-      if(response.data == "ok"){
-        this.$router.push('/profil/login')
+      });
+      console.log(response);
+      this.response = response;
+      if (response.data == "ok") {
+        this.$router.push("/profil/login");
       }
-    }
-  }
+    },
+  },
 });
 </script>
 
 <style scoped>
 #container {
   text-align: center;
-  
+
   position: absolute;
   left: 0;
   right: 0;
@@ -112,9 +118,9 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
+
   color: #8c8c8c;
-  
+
   margin: 0;
 }
 

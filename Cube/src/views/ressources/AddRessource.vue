@@ -37,7 +37,8 @@
               v-for="typ in TypesArray"
               :key="typ._id"
               v-bind:value="typ.Nom"
-            >{{typ.Nom}}</ion-select-option>
+              >{{ typ.Nom }}</ion-select-option
+            >
           </ion-select>
         </ion-item>
         <ion-item>
@@ -49,7 +50,16 @@
 </template>
 
 <script>
-import { IonContent, IonItem, IonButton, IonPage, IonSelect, IonSelectOption, IonLabel, IonTextarea } from "@ionic/vue";
+import {
+  IonContent,
+  IonItem,
+  IonButton,
+  IonPage,
+  IonSelect,
+  IonSelectOption,
+  IonLabel,
+  IonTextarea,
+} from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
 import MenuHeader from "../menu/menuHeader.vue";
@@ -67,7 +77,7 @@ export default defineComponent({
     IonSelect,
     IonSelectOption,
     IonLabel,
-    IonTextarea
+    IonTextarea,
   },
   data() {
     return {
@@ -76,7 +86,7 @@ export default defineComponent({
       types: "",
       content: "",
       CategoriesArray: [],
-      TypesArray: []
+      TypesArray: [],
     };
   },
   methods: {
@@ -90,11 +100,11 @@ export default defineComponent({
       this.$router.push("/profil");
     },
   },
-  async mounted(){
-      const cat = await CategoriesServices.GetAllCategories();
-      this.CategoriesArray = cat.data;
-      const typ = await TypesServices.GetAllTypeOfRessource();
-      this.TypesArray = typ.data;
-  }
+  async mounted() {
+    const cat = await CategoriesServices.GetAllCategories();
+    this.CategoriesArray = cat.data;
+    const typ = await TypesServices.GetAllTypeOfRessource();
+    this.TypesArray = typ.data;
+  },
 });
 </script>
