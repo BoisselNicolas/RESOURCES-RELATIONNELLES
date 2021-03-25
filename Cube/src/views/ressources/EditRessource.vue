@@ -72,9 +72,6 @@ export default {
         categoriesRessource: this.categories,
         idRessource: this.id,
       });
-      console.log(this.categories);
-      console.log(this.title);
-      console.log(this.content);
       this.$router.push("/profil");
     },
   },

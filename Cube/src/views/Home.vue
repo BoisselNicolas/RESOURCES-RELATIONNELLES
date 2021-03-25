@@ -24,53 +24,18 @@
           </ion-select>
           <ion-button v-on:click="RessourceByCat">Filtrer</ion-button>
         </div>
-
-        <ion-card
+        <div
           v-for="ressource in filteredList(RessourcesArray, filterText)"
           :key="ressource._id"
         >
-          <ion-card-header>
-            <ion-card-subtitle
-              >{{ TimeStampToDate(ressource.datePublication) }} -
-              {{ ressource.categories }}</ion-card-subtitle
-            >
-            <ion-card-title v-on:click="detailRessource(ressource._id)">{{
-              ressource.title
-            }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content
-            v-on:click="detailRessource(ressource._id)"
-            maxlength="10"
-            size="10"
-          >
-            {{ ressource.content }}
-          </ion-card-content>
-
-          <ion-icon name="accessibility-outline"></ion-icon>
-          <ion-row class="cardfooter">
-            <ion-col>
-              <ion-icon
-                name="arrow-up-outline"
-                v-on:click="ExploitedRessource(ressource._id)"
-                style="font-size: 30px"
-              ></ion-icon>
-              <ion-icon
-                name="arrow-down-outline"
-                v-on:click="UnExploitedRessource(ressource._id)"
-                style="font-size: 30px"
-              ></ion-icon>
-              <ion-icon
-                name="star-outline"
-                v-on:click="FavRessource(ressource._id)"
-                style="font-size: 30px; color: #f1bb39"
-              ></ion-icon>
-              <ion-button v-on:click="detailRessource(ressource._id)"
-                >Voir plus</ion-button
-              >
-            </ion-col>
-          </ion-row>
-        </ion-card>
+          <ressource-card
+            v-bind:date="ressource.datePublication"
+            v-bind:categories="ressource.categories"
+            v-bind:content="ressource.content"
+            v-bind:id="ressource._id"
+            v-bind:title="ressource.title"
+          ></ressource-card>
+        </div>
       </div>
     </ion-content>
   </ion-page>
@@ -100,6 +65,7 @@ import MenuHeader from "../views/menu/menuHeader";
 import { addIcons } from "ionicons";
 import { arrowUpOutline, arrowDownOutline, starOutline } from "ionicons/icons";
 import CategoriesServices from "../services/Categories";
+import RessourceCard from "./ressources/RessourceCard";
 export default defineComponent({
   name: "Profil",
   data() {
@@ -121,16 +87,9 @@ export default defineComponent({
   components: {
     IonContent,
     IonPage,
+    RessourceCard,
     IonButton,
     MenuHeader,
-    IonCard,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonCardHeader,
-    IonCardContent,
-    IonIcon,
-    IonCol,
-    IonRow,
     IonLabel,
     IonSelect,
     IonSelectOption,

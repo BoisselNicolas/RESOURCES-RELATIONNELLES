@@ -17,40 +17,15 @@
             Type de ressource
           </ion-button>
         </ion-item>
-
-        <ion-card v-for="ressource in RessourcesArray" :key="ressource._id">
-          <ion-card-header>
-            <ion-card-subtitle>
-              {{ TimeStampToDate(ressource.datePublication) }} - {{ ressource.categories }}
-            </ion-card-subtitle>
-            <ion-card-title v-on:click="detailRessource(ressource._id)">{{
-              ressource.title
-            }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content v-on:click="detailRessource(ressource._id)">
-            {{ ressource.content }}
-          </ion-card-content>
-
-          <ion-icon name="accessibility-outline"></ion-icon>
-          <ion-row class="cardfooter">
-            <ion-col>
-              <ion-icon
-                name="create-outline"
-                v-on:click="editRessource(ressource._id)"
-                style="font-size: 30px; color: #f1bb39"
-              ></ion-icon>
-              <ion-icon
-                name="trash-outline"
-                v-on:click="deleteRessource(ressource._id)"
-                style="font-size: 30px; color: red"
-              ></ion-icon>
-              <ion-button v-on:click="detailRessource(ressource._id)"
-                >Voir plus</ion-button
-              >
-            </ion-col>
-          </ion-row>
-        </ion-card>
+        <div v-for="ressource in RessourcesArray" :key="ressource._id">
+          <ressource-card
+            v-bind:date='ressource.datePublication'
+            v-bind:categories='ressource.categories'
+            v-bind:content='ressource.content'
+            v-bind:id='ressource._id'
+            v-bind:title='ressource.title'
+          ></ressource-card>
+        </div>
       </div>
     </ion-content>
   </ion-page>
@@ -62,18 +37,11 @@ import {
   IonPage,
   IonButton,
   IonItem,
-  IonCard,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardHeader,
-  IonCardContent,
-  IonIcon,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
 import MenuHeader from "../../views/menu/menuHeader";
-import { addIcons } from "ionicons";
-import { trashOutline, createOutline } from "ionicons/icons";
+import RessourceCard from "../ressources/RessourceCard";
 
 export default defineComponent({
   name: "Profil",
@@ -83,48 +51,18 @@ export default defineComponent({
       RessourcesArray: [],
     };
   },
-  created() {
-    addIcons({
-      "trash-outline": trashOutline,
-      "create-outline": createOutline,
-    });
-  },
   components: {
     IonContent,
     IonPage,
     IonButton,
     IonItem,
     MenuHeader,
-    IonCard,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonCardHeader,
-    IonCardContent,
-    IonIcon,
-  },
-  methods: {
-    async deleteRessource(RessourceId) {
-      await RessourceServices.deleteRessource({
-        RessourceId: RessourceId,
-      });
-      const rslt = await RessourceServices.getUserRessources();
-      this.RessourcesArray = rslt.data;
-    },
-    editRessource(RessourceId) {
-      this.$router.push(`/profil/ressource/edit/${RessourceId}`);
-    },
-    detailRessource(RessourceId) {
-      this.$router.push(`/profil/ressource/${RessourceId}`);
-    },
-    TimeStampToDate: function (timestamp) {
-      const date = new Date(timestamp * 1).toLocaleDateString("FR");
-      return date;
-    },
+    RessourceCard
   },
   async mounted() {
     const rslt = await RessourceServices.getUserRessources();
     this.RessourcesArray = rslt.data;
-    console.log(this.$store.state.role);
+    console.log(this.$route.fullPath);
   },
 });
 </script>
