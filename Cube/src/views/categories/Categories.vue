@@ -1,7 +1,5 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content class="container">
+    <div>
       <ion-item>
         <ion-button href="/profil/categories/add"
           >Ajouter une Categories</ion-button
@@ -13,14 +11,12 @@
         <ion-button v-on:click="deleteCategories(cat._id)">delete</ion-button>
         <ion-button v-on:click="editCategories(cat._id)">Edit</ion-button>
       </ul>
-    </ion-content>
-  </ion-page>
+    </div>
 </template>
 
 <script>
 import { IonButton, IonItem, IonContent, IonPage } from "@ionic/vue";
 import CategoriesServices from "../../services/Categories";
-import MenuHeader from "../menu/menuHeader.vue";
 export default {
   name: "Categories",
   data() {
@@ -48,15 +44,7 @@ export default {
   components: {
     IonButton,
     IonItem,
-    IonContent,
-    IonPage,
-    MenuHeader,
   },
 };
 </script>
 
-<style scoped>
-ion-item {
-  margin-top: 10%;
-}
-</style>

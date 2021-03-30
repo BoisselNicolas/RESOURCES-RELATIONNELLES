@@ -1,7 +1,4 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
       <div class="content">
         <ion-item>
           <ion-textarea
@@ -34,20 +31,17 @@
           <ion-button v-on:click="editRessource">Mettre à jour</ion-button>
         </ion-item>
       </div>
-    </ion-content>
-  </ion-page>
 </template>
 
 <script>
 import {
-  IonContent,
   IonItem,
   IonButton,
-  IonPage,
   IonSelect,
   IonSelectOption,
   IonLabel,
   IonTextarea,
+  IonContent
 } from "@ionic/vue";
 import RessourceServices from "../../services/Ressources";
 import MenuHeader from "../../views/menu/menuHeader";
@@ -65,13 +59,14 @@ export default {
     };
   },
   methods: {
-    editRessource() {
-      RessourceServices.updateRessource({
+    async editRessource() {
+      const res = await RessourceServices.updateRessource({
         titleRessource: this.title,
         contentRessource: this.content,
         categoriesRessource: this.categories,
         idRessource: this.id,
       });
+      console.log(res)
       this.$router.push("/profil");
     },
   },
@@ -85,13 +80,11 @@ export default {
     this.categories = rslt.data.categories;
     const cat = await CategoriesServices.GetAllCategories();
     this.CategoriesArray = cat.data;
+    console.log("toto")
   },
   components: {
-    IonContent,
     IonItem,
     IonButton,
-    IonPage,
-    MenuHeader,
     IonSelect,
     IonSelectOption,
     IonLabel,

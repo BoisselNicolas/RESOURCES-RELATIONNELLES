@@ -1,22 +1,14 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
-      <div class="container">
         <ion-item>
           <label>Nouveau type de ressource : </label>
           <input type="text" placeholder="Nom..." v-model="nameType" />
           <ion-button v-on:click="addtype"> Ajouter </ion-button>
         </ion-item>
-      </div>
-    </ion-content>
-  </ion-page>
 </template>
 
 <script>
-import { IonItem, IonButton, IonPage, IonContent } from "@ionic/vue";
+import { IonItem, IonButton } from "@ionic/vue";
 import TypeOfRessourceService from "../../services/TypeDeRessource";
-import MenuHeader from "../menu/menuHeader.vue";
 export default {
   name: "",
   data() {
@@ -35,9 +27,6 @@ export default {
   components: {
     IonItem,
     IonButton,
-    IonPage,
-    IonContent,
-    MenuHeader,
   },
 };
 </script>

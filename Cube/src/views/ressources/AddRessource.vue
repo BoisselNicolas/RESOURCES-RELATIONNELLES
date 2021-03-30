@@ -1,7 +1,4 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
       <div class="content">
         <ion-item>
           <ion-textarea
@@ -45,16 +42,12 @@
           <ion-button v-on:click="NewRessource">Ajouter</ion-button>
         </ion-item>
       </div>
-    </ion-content>
-  </ion-page>
 </template>
 
 <script>
 import {
-  IonContent,
   IonItem,
   IonButton,
-  IonPage,
   IonSelect,
   IonSelectOption,
   IonLabel,
@@ -62,18 +55,14 @@ import {
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../../services/Ressources";
-import MenuHeader from "../menu/menuHeader.vue";
 import CategoriesServices from "../../services/Categories";
 import TypesServices from "../../services/TypeDeRessource";
 
 export default defineComponent({
   name: "Profil Ressource Add",
   components: {
-    IonContent,
     IonItem,
     IonButton,
-    IonPage,
-    MenuHeader,
     IonSelect,
     IonSelectOption,
     IonLabel,

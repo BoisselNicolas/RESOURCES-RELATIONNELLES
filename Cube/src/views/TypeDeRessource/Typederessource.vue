@@ -1,8 +1,5 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
-      <div class="container">
+      <div>
         <ion-item>
           <ion-button href="/profil/typeressource/add"
             >Ajouter un type de ressource</ion-button
@@ -19,14 +16,11 @@
           >
         </ul>
       </div>
-    </ion-content>
-  </ion-page>
 </template>
 
 <script>
-import { IonItem, IonButton, IonPage, IonContent } from "@ionic/vue";
+import { IonItem, IonButton } from "@ionic/vue";
 import TypeOfRessourceService from "../../services/TypeDeRessource";
-import MenuHeader from "../menu/menuHeader.vue";
 export default {
   name: "",
   data() {
@@ -37,9 +31,6 @@ export default {
   components: {
     IonItem,
     IonButton,
-    IonPage,
-    IonContent,
-    MenuHeader,
   },
   async mounted() {
     const rslt = await TypeOfRessourceService.GetAllTypeOfRessource();
@@ -58,8 +49,3 @@ export default {
 };
 </script>
 
-<style scoped>
-ion-item {
-  margin-top: 10%;
-}
-</style>

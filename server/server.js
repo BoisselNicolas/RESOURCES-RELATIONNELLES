@@ -358,7 +358,7 @@ app.post('/editRessource', (req, res) => {
       throw err
     } else {
       if (obj != null) {
-        console.log("Upadting !")
+        res.send("Updated")
       }
     }
   })

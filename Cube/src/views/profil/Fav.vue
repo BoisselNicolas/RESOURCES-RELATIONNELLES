@@ -1,6 +1,5 @@
 <template>
   <ion-page>
-    <menu-header></menu-header>
     <ion-content>
       <div>
         <ion-card>
@@ -52,14 +51,12 @@ import {
   IonCol,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-import MenuHeader from "../menu/menuHeader.vue";
 export default defineComponent({
   name: "App",
   components: {
     IonContent,
     IonPage,
     IonButton,
-    MenuHeader,
     IonCard,
     IonCardSubtitle,
     IonCardTitle,

@@ -1,7 +1,5 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content class="container">
+<div>
       <h1>{{ title }}</h1>
       <label for=""> {{ TimeStampToDate(date) }} | {{ categories }} </label>
       <div>
@@ -24,8 +22,6 @@
           </ion-card-content>
         </ion-card>
       </div>
-    </ion-content>
-    <ion-footer padding>
       <ion-textarea
         type="text"
         placeholder="Comment .... "
@@ -34,8 +30,7 @@
       <ion-button ion-button small float-right round v-on:click="addComment"
         >Send</ion-button
       >
-    </ion-footer>
-  </ion-page>
+</div>
 </template>
 
 <script>
@@ -55,12 +50,8 @@ import MenuHeader from "../menu/menuHeader";
 export default defineComponent({
   name: "Home",
   components: {
-    IonContent,
-    IonPage,
-    MenuHeader,
     IonButton,
     IonTextarea,
-    IonFooter,
     IonCard,
     IonCardContent,
   },

@@ -1,6 +1,5 @@
 <template>
   <ion-card>
-    <router-link v-bind:to="detailRessource">
       <ion-card-header>
         <ion-card-subtitle>
           {{ TimeStampToDate(date) }} -
@@ -8,12 +7,10 @@
         </ion-card-subtitle>
         <ion-card-title>{{ title }}</ion-card-title>
       </ion-card-header>
-    </router-link>
-    <router-link v-bind:to="detailRessource">
+
       <ion-card-content>
         {{ content }}
       </ion-card-content>
-    </router-link>
     <ion-icon name="accessibility-outline"></ion-icon>
     <ion-row class="cardfooter" >
       <ion-col>
@@ -26,10 +23,10 @@
         <ion-icon
           name="trash-outline"
           v-if="this.$route.fullPath == '/profil'"
-          v-on:click="deleteRessource(id)"
+          v-on:click="presentAlertConfirm(id)"
           style="font-size: 30px; color: red"
         ></ion-icon>
-        <router-link v-bind:to="detailRessource">
+        <router-link v-bind:to="detailRessource" v-if="this.$route.fullPath == '/ressource'">
           <ion-button>Voir plus</ion-button>
         </router-link>
       </ion-col>
@@ -45,6 +42,7 @@ import {
   IonCardHeader,
   IonCardContent,
   IonIcon,
+  alertController
 } from "@ionic/vue";
 import { defineComponent } from "@vue/runtime-core";
 import { addIcons } from "ionicons";
@@ -76,7 +74,7 @@ export default defineComponent({
       if (!this.id) {
         return "/";
       }
-      return `/profil/ressource/${this.id}`;
+      return `/ressource/${this.id}`;
     },
   },
   methods: {
@@ -88,8 +86,33 @@ export default defineComponent({
       await RessourceServices.deleteRessource({
         RessourceId: RessourceId,
       });
-      const rslt = await RessourceServices.getUserRessources();
-      this.RessourcesArray = rslt.data;
+    },
+    async presentAlertConfirm(RessourceId) {
+      const alert = await alertController
+        .create({
+          cssClass: 'my-custom-class',
+          header: 'Confirmation requis.',
+          message: 'Vous êtes sur le point de supprimer une ressource définitivement.',
+          buttons: [
+            {
+              text: 'Annuler',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: blah => {
+                console.log("Annulé")
+              },
+            },
+            {
+              text: 'Supprimer',
+              handler: () => {
+                this.deleteRessource(RessourceId)
+                const indexRessource = this.$parent.RessourcesArray.map(item => item._id).indexOf(RessourceId)
+                this.$parent.RessourcesArray.splice(indexRessource, 1)
+              },
+            },
+          ],
+        });
+      return alert.present();
     },
   },
 

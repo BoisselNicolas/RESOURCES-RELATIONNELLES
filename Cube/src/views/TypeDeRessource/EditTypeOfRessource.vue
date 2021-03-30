@@ -1,7 +1,4 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
       <div class="container">
         <ion-item>
           <label>Nom : </label>
@@ -9,14 +6,11 @@
           <ion-button v-on:click="editType"> Editer </ion-button>
         </ion-item>
       </div>
-    </ion-content>
-  </ion-page>
 </template>
 
 <script>
-import { IonItem, IonButton, IonPage, IonContent } from "@ionic/vue";
+import { IonItem, IonButton } from "@ionic/vue";
 import TypeOfRessourceService from "../../services/TypeDeRessource";
-import MenuHeader from "../menu/menuHeader.vue";
 export default {
   name: "",
   data() {
@@ -28,9 +22,6 @@ export default {
   components: {
     IonItem,
     IonButton,
-    IonPage,
-    IonContent,
-    MenuHeader,
   },
   methods: {
     editType() {
@@ -47,11 +38,7 @@ export default {
       idTypeDeRessource: this.id,
     });
     this.nameType = rslt.data.Nom;
+    console.log(rslt.data.Nom)
   },
 };
 </script>
-<style scoped>
-.container {
-  margin-top: 10%;
-}
-</style>

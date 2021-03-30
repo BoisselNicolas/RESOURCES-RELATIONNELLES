@@ -1,7 +1,4 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
       <div>
         <div>
           <ion-input
@@ -37,14 +34,10 @@
           ></ressource-card>
         </div>
       </div>
-    </ion-content>
-  </ion-page>
 </template>
 
 <script >
 import {
-  IonContent,
-  IonPage,
   IonButton,
   IonCard,
   IonCardSubtitle,
@@ -61,7 +54,6 @@ import {
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import RessourceServices from "../services/Ressources";
-import MenuHeader from "../views/menu/menuHeader";
 import { addIcons } from "ionicons";
 import { arrowUpOutline, arrowDownOutline, starOutline } from "ionicons/icons";
 import CategoriesServices from "../services/Categories";
@@ -85,11 +77,8 @@ export default defineComponent({
     });
   },
   components: {
-    IonContent,
-    IonPage,
     RessourceCard,
     IonButton,
-    MenuHeader,
     IonLabel,
     IonSelect,
     IonSelectOption,

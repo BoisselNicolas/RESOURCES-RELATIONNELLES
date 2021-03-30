@@ -28,7 +28,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-item href="/home">Accueil</ion-item>
+        <ion-item href="/ressource">Accueil</ion-item>
         <ion-item href="/profil">Profil</ion-item>
         <ion-item href="/profil/fav">Favoris</ion-item>
         <ion-item href="/profil/settings">Settings</ion-item>

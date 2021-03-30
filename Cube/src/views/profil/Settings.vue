@@ -1,7 +1,5 @@
 <template>
-  <ion-page>
-    <menu-header></menu-header>
-    <ion-content>
+    <div>
       <h1>Informations personnelles</h1>
       <div>
         <ion-label>Nom</ion-label>
@@ -16,22 +14,17 @@
         <input type="text" placeholder="Mail" v-model="mailUser" />
       </div>
       <ion-button v-on:click="UpdateUser">Mettre à jour </ion-button>
-    </ion-content>
-  </ion-page>
+    </div>
 </template>
 
 <script >
-import { IonPage, IonContent, IonLabel, IonButton } from "@ionic/vue";
+import {  IonLabel, IonButton } from "@ionic/vue";
 import { defineComponent } from "vue";
-import MenuHeader from "../menu/menuHeader.vue";
 import User from "../../../src/services/User";
 
 export default defineComponent({
   name: "App",
   components: {
-    IonPage,
-    MenuHeader,
-    IonContent,
     IonLabel,
     IonButton,
   },
