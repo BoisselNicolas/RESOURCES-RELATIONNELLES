@@ -4,7 +4,6 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 ![Travis (.org)](https://img.shields.io/travis/BoisselNicolas/RESOURCES-RELATIONNELLES?style=for-the-badge)
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
@@ -142,6 +141,8 @@ Distributé sous licence OpenGL-3.0. See `LICENSE` for more information.
 
 Boissel Nicolas - ncboissel@gmail.com
 
+[![LinkedIn][linkedin-shield]][linkedin-url]
+  
 Project Link: [https://github.com/BoisselNicolas/RESOURCES-RELATIONNELLES/](https://github.com/BoisselNicolas/RESOURCES-RELATIONNELLES/)
 
 
